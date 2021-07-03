@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  myapp:
+    image: quay.io/prometheus/node-exporter:v1.1.2
+  promrelay:
+    image: hhromic/prometheus-relay:1.0.0
+    networks:
+      - default
+      - metrics
+
+networks:
+  default: {}
+  metrics:
+    external: true
+    name: metrics_default

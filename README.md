@@ -1,7 +1,9 @@
 # prometheus-relay
 
-A simple [Prometheus](https://prometheus.io/) relay server for scraping
-applications behind private networks written in [Node.js](https://nodejs.org/).
+A simple [Prometheus](https://prometheus.io/) relay server written in
+[Node.js](https://nodejs.org/) for scraping applications in private networks.
+
+The motivating use case for this project can be found [here](use-case.md).
 
 ## Building
 
@@ -11,13 +13,7 @@ To build a Docker image for the project:
 
 ## Usage
 
-To run the Prometheus relay server using Docker:
-
-    docker run --rm -p 8080:8080 prometheus-relay
-
-To run the Prometheus relay server using Docker with a custom port:
-
-    docker run --rm -e PORT=5555 -p 5555:5555 prometheus-relay
+A usage example can be found in the [`example`](example/) directory.
 
 ## License
 

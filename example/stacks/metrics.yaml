@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.28.1
+    command:
+      --config.file=/prometheus.yaml
+      --storage.tsdb.path=/prometheus
+      --web.console.libraries=/usr/share/prometheus/console_libraries
+      --web.console.templates=/usr/share/prometheus/consoles
+    configs:
+      - prometheus.yaml
+    ports:
+      - 9090:9090
+    volumes:
+      - data:/prometheus
+
+configs:
+  prometheus.yaml:
+    external: true
+    name: metrics-prometheus-yaml
+
+volumes:
+  data: {}
