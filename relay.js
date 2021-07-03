@@ -13,27 +13,32 @@
 //   limitations under the License.
 
 const http = require('http'),
-      httpProxy = require('http-proxy'),
-      url = require('url');
+      httpProxy = require('http-proxy');
 
-const proxy = httpProxy.createProxyServer({});
+const proxy = httpProxy.createProxyServer({changeOrigin: true});
 
 const port = process.env.PORT || 8080;
 
 proxy.on('error', function (err, req, res) {
-  res.writeHead(502, {
-    'Content-Type': 'text/plain'
-  });
+  res.writeHead(502, {'Content-Type': 'text/plain'});
   res.end(err.toString() + '\n');
 });
 
+proxy.on('proxyReq', function(proxyReq) {
+  const proxyReqURL = new URL(proxyReq.path, 'http://localhost');
+  proxyReqURL.searchParams.delete('_scheme');
+  proxyReqURL.searchParams.delete('_host');
+  proxyReqURL.searchParams.delete('_port');
+  proxyReq.path = `${proxyReqURL.pathname}${proxyReqURL.search}`;
+});
+
 const server = http.createServer(function(req, res) {
-  const query = url.parse(req.url, true).query;
-  const scheme = query._scheme || 'http';
-  const host = query._host || 'localhost';
-  const port = query._port || 80;
+  const reqURL = new URL(req.url, 'http://localhost');
+  const scheme = reqURL.searchParams.get('_scheme') || 'http';
+  const host = reqURL.searchParams.get('_host') || 'localhost';
+  const port = reqURL.searchParams.get('_port') || 80;
   proxy.web(req, res, {target: `${scheme}://${host}:${port}`});
 });
 
-console.log('Prometheus relay listening on port %d', port);
+console.log('Prometheus relay server listening on port %d', port);
 server.listen(port);
