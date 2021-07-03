@@ -11,6 +11,9 @@ To build a Docker image for the project:
 
     docker build -t prometheus-relay .
 
+> **Note:** A ready-to-use image is available in
+> [Docker Hub](https://hub.docker.com/r/hhromic/prometheus-relay).
+
 ## Usage
 
 A usage example can be found in the [`example`](example/) directory.
