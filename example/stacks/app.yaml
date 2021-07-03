@@ -4,7 +4,7 @@ services:
   myapp:
     image: quay.io/prometheus/node-exporter:v1.1.2
   promrelay:
-    image: hhromic/prometheus-relay:1.0.0
+    image: ghcr.io/hhromic/prometheus-relay:1.0.0
     networks:
       - default
       - metrics
