@@ -1,6 +1,6 @@
 ## example
 
-> **Note:** The example in this directory assume that you have Docker running
+> **Note:** The example in this directory assumes that you have Docker running
 > in [swarm mode](https://docs.docker.com/engine/swarm/).
 
 To run the example, first deploy the centralised Prometheus stack:
