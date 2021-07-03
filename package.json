@@ -1,0 +1,11 @@
+{
+  "name": "prometheus-relay",
+  "version": "1.0.0",
+  "homepage": "https://github.com/hhromic/prometheus-relay",
+  "bugs": "https://github.com/hhromic/prometheus-relay/issues",
+  "license": "Apache-2.0",
+  "author": "Hugo Hromic (https://github.com/hhromic)",
+  "dependencies": {
+    "http-proxy": "^1.18.1"
+  }
+}
