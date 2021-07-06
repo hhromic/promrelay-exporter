@@ -44,5 +44,5 @@ const server = http.createServer(function(req, res) {
   proxy.web(req, res, {target: target});
 });
 
-console.log('Prometheus relay server listening on port %d', port);
+console.log('Prometheus relay exporter listening on port %d', port);
 server.listen(port);

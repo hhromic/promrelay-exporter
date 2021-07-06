@@ -12,4 +12,4 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: 'app_promrelay:8080'  # the relay server address
+        replacement: 'app_promrelay:8080'  # the relay exporter address

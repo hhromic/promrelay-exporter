@@ -1,6 +1,6 @@
 # use-case
 
-To demonstrate the use case of the Prometheus relay server, consider the
+To demonstrate the use case of the Prometheus relay exporter, consider the
 following example initial scenario:
 
     +---------+                           +------------+
@@ -43,24 +43,24 @@ In this new scenario, it becomes clear that neither the applications nor
 their services are isolated anymore. All the participating components are
 now unavoidably interconnected through the *private network 3*.
 
-To solve this situation, we can use the Prometheus relay server as a
+To solve this situation, we can use the Prometheus relay exporter as a
 sidecar in each application stack:
 
     +---------+                               +------------+
     |  App 1  |---+---[ private network 1 ]---|  Database  |
     +---------+   |                           +------------+
                   |
-                +---------------------------+
-             +--|  Prometheus Relay Server  |
-             |  +---------------------------+
+                +-----------------------------+
+             +--|  Prometheus Relay Exporter  |
+             |  +-----------------------------+
              |
              |                           +--------------+
              +---[ private network 3 ]---|  Prometheus  |
              |                           +--------------+
              |
-             |  +---------------------------+
-             +--|  Prometheus Relay Server  |
-                +---------------------------+
+             |  +-----------------------------+
+             +--|  Prometheus Relay Exporter  |
+                +-----------------------------+
                   |
     +---------+   |                           +-----------+
     |  App 2  |---+---[ private network 2 ]---|  Service  |
@@ -68,7 +68,7 @@ sidecar in each application stack:
 
 In this final scenario, **both applications remain isolated again**.
 
-The Prometheus relay server in the above architecture offers the following benefits:
+The Prometheus relay exporter in the above architecture offers the following benefits:
 
 * Stacks can be centrally monitored using Prometheus without breaking isolation.
 * Metrics exporter ports in applications and services do NOT need to be exposed publicly.

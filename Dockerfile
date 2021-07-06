@@ -1,6 +1,6 @@
 FROM node:alpine AS base
 
-LABEL org.opencontainers.image.source https://github.com/hhromic/prometheus-relay
+LABEL org.opencontainers.image.source https://github.com/hhromic/prometheus-relay-exporter
 
 ENTRYPOINT ["tini", "--"]
 CMD ["node", "/app/relay.js"]

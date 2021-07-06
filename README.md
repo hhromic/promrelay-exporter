@@ -1,7 +1,10 @@
-# prometheus-relay
+# prometheus-relay-exporter
 
-A simple [Prometheus](https://prometheus.io/) relay server written in
-[Node.js](https://nodejs.org/) for scraping applications in private networks.
+A simple [Prometheus](https://prometheus.io/) relay exporter written in
+[Node.js](https://nodejs.org/) for scraping applications behind private networks.
+
+This exporter uses the [multi-target exporter pattern](https://prometheus.io/docs/guides/multi-target-exporter/)
+described in the Prometheus documentation.
 
 The motivating use case for this project can be found [here](use-case.md).
 
@@ -9,14 +12,14 @@ The motivating use case for this project can be found [here](use-case.md).
 
 To build a Docker image for the project:
 
-    docker build -t prometheus-relay .
+    docker build -t prometheus-relay-exporter .
 
 > **Note:** Ready-to-use images are available in the
-> [GitHub Container Registry](https://github.com/users/hhromic/packages/container/package/prometheus-relay).
+> [GitHub Container Registry](https://github.com/users/hhromic/packages/container/package/prometheus-relay-exporter).
 
 ## Usage
 
-A usage example can be found in the [`example`](example/) directory.
+A full example can be found in the [`example`](example/) directory.
 
 ## Code Linting
 

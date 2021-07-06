@@ -27,7 +27,7 @@ Now, to deploy the example application stack:
 This stack will deploy two containers:
 
 * A Prometheus Node Exporter container with some metrics to scrape (`myapp`).
-* A Prometheus Relay Server container (`promrelay`).
+* A Prometheus Relay Exporter container (`promrelay`).
 
 You can now verify that Prometheus is able to scrape the metrics exposed by the
 Node Exporter container, without having direct access to it.
