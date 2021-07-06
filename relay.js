@@ -26,18 +26,22 @@ proxy.on('error', function (err, req, res) {
 
 proxy.on('proxyReq', function(proxyReq) {
   const proxyReqURL = new URL(proxyReq.path, 'http://localhost');
-  proxyReqURL.searchParams.delete('_scheme');
-  proxyReqURL.searchParams.delete('_host');
-  proxyReqURL.searchParams.delete('_port');
+  proxyReqURL.searchParams.delete('target');
   proxyReq.path = `${proxyReqURL.pathname}${proxyReqURL.search}`;
 });
 
 const server = http.createServer(function(req, res) {
   const reqURL = new URL(req.url, 'http://localhost');
-  const scheme = reqURL.searchParams.get('_scheme') || 'http';
-  const host = reqURL.searchParams.get('_host') || 'localhost';
-  const port = reqURL.searchParams.get('_port') || 80;
-  proxy.web(req, res, {target: `${scheme}://${host}:${port}`});
+  let target = reqURL.searchParams.get('target');
+  if (target === null) {
+    res.writeHead(400, {'Content-Type': 'text/plain'});
+    res.end('Query search parameter \'target\' is missing.\n')
+    return;
+  }
+  if (!target.startsWith("http://") && !target.startsWith("https://")) {
+    target = `http://${target}`;
+  }
+  proxy.web(req, res, {target: target});
 });
 
 console.log('Prometheus relay server listening on port %d', port);

@@ -7,24 +7,9 @@ scrape_configs:
       - targets:
           - myapp:9100  # not accessible by Prometheus directly
     relabel_configs:
-      # pass the original target scheme to the relay server
-      - source_labels:
-          - __scheme__
-        target_label: __param__scheme
-      # pass the original target host to the relay server
-      - source_labels:
-          - __address__
-        regex: '(.*):.*'
-        target_label: __param__host
-      # pass the original target port to the relay server
-      - source_labels:
-          - __address__
-        regex: '.*:(.*)'
-        target_label: __param__port
-      # preserve the original target address
-      - source_labels:
-          - __address__
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
         target_label: instance
-      # replace the target address with the relay server address
       - target_label: __address__
-        replacement: 'app_promrelay:8080'
+        replacement: 'app_promrelay:8080'  # the relay server address
