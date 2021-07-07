@@ -5,7 +5,7 @@ LABEL org.opencontainers.image.source https://github.com/hhromic/prometheus-rela
 ENV NODE_ENV=production
 ENTRYPOINT ["tini", "--"]
 CMD ["node", "server.js"]
-EXPOSE 8080
+EXPOSE 9878
 
 RUN apk add --no-cache tini
 
