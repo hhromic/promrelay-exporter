@@ -1,4 +1,4 @@
 **
 !LICENSE
-!package.json
-!relay.js
+!package*.json
+!server.js
