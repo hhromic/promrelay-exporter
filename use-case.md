@@ -20,8 +20,8 @@ The above deployment can be easily modelled using two Docker Compose stacks
 running in a Docker Swarm cluster. In this case, each application and
 their associated services can run in their own isolated overlay network.
 
-Now, suppose that you want to add metrics monitoring using a centralised,
-cluster-wide Prometheus instance:
+Now, suppose that you want to add metrics monitoring using a Prometheus
+instance also on its own private network:
 
     +---------+                           +------------+
     |  App 1  |---[ private network 1 ]---|  Database  |
@@ -66,11 +66,11 @@ sidecar in each application stack:
     |  App 2  |---+---[ private network 2 ]---|  Service  |
     +---------+                               +-----------+
 
-In this final scenario, **both applications remain isolated again**.
+In this final scenario, both applications and their services **remain isolated again**.
 
 The Prometheus relay exporter in the above architecture offers the following benefits:
 
-* Stacks can be centrally monitored using Prometheus without breaking isolation.
+* Application stacks can be monitored using Prometheus without breaking isolation anywhere.
 * Metrics exporter ports in applications and services do NOT need to be exposed publicly.
 * Automatic discovery of containers to scrape can be achieved using the
   [Docker service discovery](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#docker_sd_config)
