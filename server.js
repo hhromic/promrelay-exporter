@@ -12,39 +12,39 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-'use strict';
+'use strict'
 
-const http = require('http'),
-      httpProxy = require('http-proxy');
+const http = require('http')
+const httpProxy = require('http-proxy')
 
-const proxy = httpProxy.createProxyServer({changeOrigin: true});
+const proxy = httpProxy.createProxyServer({ changeOrigin: true })
 
-const port = process.env.PORT || 9878;
+const port = process.env.PORT || 9878
 
 proxy.on('error', function (err, req, res) {
-  res.writeHead(502, {'Content-Type': 'text/plain'});
-  res.end(err.toString() + '\n');
-});
+  res.writeHead(502, { 'Content-Type': 'text/plain' })
+  res.end(err.toString() + '\n')
+})
 
-proxy.on('proxyReq', function(proxyReq) {
-  const proxyReqURL = new URL(proxyReq.path, 'http://localhost');
-  proxyReqURL.searchParams.delete('target');
-  proxyReq.path = `${proxyReqURL.pathname}${proxyReqURL.search}`;
-});
+proxy.on('proxyReq', function (proxyReq) {
+  const proxyReqURL = new URL(proxyReq.path, 'http://localhost')
+  proxyReqURL.searchParams.delete('target')
+  proxyReq.path = `${proxyReqURL.pathname}${proxyReqURL.search}`
+})
 
-const server = http.createServer(function(req, res) {
-  const reqURL = new URL(req.url, 'http://localhost');
-  let target = reqURL.searchParams.get('target');
+const server = http.createServer(function (req, res) {
+  const reqURL = new URL(req.url, 'http://localhost')
+  let target = reqURL.searchParams.get('target')
   if (target === null) {
-    res.writeHead(400, {'Content-Type': 'text/plain'});
+    res.writeHead(400, { 'Content-Type': 'text/plain' })
     res.end('Query search parameter \'target\' is missing.\n')
-    return;
+    return
   }
-  if (!target.startsWith("http://") && !target.startsWith("https://")) {
-    target = `http://${target}`;
+  if (!target.startsWith('http://') && !target.startsWith('https://')) {
+    target = `http://${target}`
   }
-  proxy.web(req, res, {target: target});
-});
+  proxy.web(req, res, { target: target })
+})
 
-console.log('Prometheus relay exporter listening on port %d', port);
-server.listen(port);
+console.log('Prometheus relay exporter listening on port %d', port)
+server.listen(port)

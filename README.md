@@ -21,6 +21,14 @@ To build a Docker image for the project:
 
 A full example can be found in the [`example`](example/) directory.
 
+## Code Standard
+
+The codebase of this project adheres to the [JavaScript Standard Style](https://standardjs.com/).
+
+To check for compliance (requires a local installation of [Node.js](https://nodejs.org/)):
+
+    npx standard
+
 ## License
 
 This project is licensed under the [Apache License Version 2.0](LICENSE).
