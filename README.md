@@ -21,12 +21,6 @@ To build a Docker image for the project:
 
 A full example can be found in the [`example`](example/) directory.
 
-## Code Linting
-
-To lint the codebase of the project using [ESLint](https://eslint.org/) and Docker:
-
-    docker run -t --rm -v $PWD:/data:ro cytopia/eslint .
-
 ## License
 
 This project is licensed under the [Apache License Version 2.0](LICENSE).
