@@ -1,17 +1,32 @@
-FROM node:16.4-alpine
+FROM python:3.10-alpine AS base
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+FROM base AS depbuilder
+
+RUN apk add --no-cache build-base
+
+COPY requirements.txt requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+FROM base AS final
 
 LABEL org.opencontainers.image.source https://github.com/hhromic/prometheus-relay-exporter
 
-ENV NODE_ENV=production
-ENTRYPOINT ["tini", "--"]
-CMD ["node", "server.js"]
+ENTRYPOINT ["python", "-m", "relay_exporter"]
+
 EXPOSE 9878
 
-RUN apk add --no-cache tini
+COPY --from=depbuilder /usr/local /usr/local
 
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
+ARG APP_HOME=/app
+ARG APP_USER=app
+ARG APP_GROUP=app
+RUN addgroup ${APP_GROUP} \
+    && adduser -D -h ${APP_HOME} -G ${APP_GROUP} ${APP_USER}
+WORKDIR ${APP_HOME}
 
-COPY server.js ./
-USER node
+COPY relay_exporter relay_exporter
+
+USER ${APP_USER}

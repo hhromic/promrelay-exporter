@@ -1,4 +1,4 @@
 **
 !LICENSE
-!package*.json
-!server.js
+!requirements.txt
+!relay_exporter/**
