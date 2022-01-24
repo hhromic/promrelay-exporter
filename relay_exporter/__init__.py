@@ -1,1 +1,1 @@
-"""Application main package."""
+"""Package init module."""

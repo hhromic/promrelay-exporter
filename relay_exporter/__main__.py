@@ -1,40 +1,16 @@
-"""Simple Prometheus relay exporter application."""
+"""Simple Prometheus relay exporter entry-point module."""
 
 import asyncio
 import sys
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 import uvloop
-from aiohttp import web, ClientSession, ClientError
+from aiohttp import web
+from .handlers import relay_handler
+from .signals import client_session
 
 
 DEF_HOST = "0.0.0.0"
 DEF_PORT = 9878
-
-
-async def client_session_cleanup_ctx(app):
-    """Cleanup context for an HTTP client session."""
-    app["client_session"] = ClientSession(trust_env=True)
-    yield
-    await app["client_session"].close()
-
-
-async def relay_handler(request):
-    """Handle relay requests."""
-    target = request.query.get("target")
-    if not target:
-        raise web.HTTPBadRequest(text="Target parameter is missing")
-    client_session = request.config_dict["client_session"]
-    try:
-        async with client_session.get(target) as client_response:
-            response = web.StreamResponse(
-                status=client_response.status,
-                headers=client_response.headers,
-            )
-            await response.prepare(request)
-            async for line in client_response.content:
-                await response.write(line)
-    except ClientError as err:
-        raise web.HTTPBadGateway(text=str(err)) from err
 
 
 def main(args):
@@ -43,7 +19,7 @@ def main(args):
     app.add_routes((
         web.get("/relay", relay_handler),
     ))
-    app.cleanup_ctx.append(client_session_cleanup_ctx)
+    app.cleanup_ctx.append(client_session)
     web.run_app(app, host=args.host, port=args.port)
 
 
