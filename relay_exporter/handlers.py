@@ -22,4 +22,4 @@ async def relay_handler(request):
             async for data in client_response.content.iter_chunked(client_read_size):
                 await request_response.write(data)
     except ClientError as err:
-        raise web.HTTPBadGateway(text=f"{err}") from err
+        raise web.HTTPBadGateway(text=f"Client error on target: {err}") from err
