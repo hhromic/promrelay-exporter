@@ -1,4 +1,11 @@
+# ignore everything
 **
+
+# allow application sources
 !LICENSE
-!requirements.txt
 !relay_exporter/**
+!requirements.txt
+
+# ignore Python cache directories
+**/__pycache__
+**/.mypy_cache
