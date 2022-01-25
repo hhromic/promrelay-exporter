@@ -1,6 +1,10 @@
 """Handlers module."""
 
+import logging
 from aiohttp import hdrs, web, ClientError
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 async def relay_handler(request):
@@ -8,11 +12,14 @@ async def relay_handler(request):
     target = request.query.get("target")
     if not target:
         raise web.HTTPBadRequest(text="Target parameter is missing")
+
     client_session = request.config_dict["client_session"]
     client_read_size = request.config_dict["client_read_size"]
     try:
         client_headers = request.headers.copy()
         del client_headers[hdrs.HOST]
+
+        LOGGER.debug("Relaying request to target: %s", target)
         async with client_session.get(target, headers=client_headers) as client_response:
             request_response = web.StreamResponse(
                 status=client_response.status,
