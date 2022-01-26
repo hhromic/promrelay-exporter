@@ -13,6 +13,7 @@ from .version import __version__
 
 DEF_HOST = "0.0.0.0"
 DEF_PORT = 9878
+DEF_CLIENT_PROXY = None
 DEF_CLIENT_READ_SIZE = 2048
 DEF_LOG_LEVEL = "INFO"
 
@@ -26,6 +27,7 @@ def main(args):
     LOGGER.info("Starting application. Version: %s", __version__)
 
     app = web.Application()
+    app["client_proxy"] = args.client_proxy
     app["client_read_size"] = args.client_read_size
     app.add_routes((
         web.get("/relay", relay_handler),
@@ -44,6 +46,8 @@ if __name__ == "__main__":
                         help="TCP/IP host for the HTTP server")
     PARSER.add_argument("-p", "--port", metavar="PORT", default=DEF_PORT,
                         help="TCP/IP port for the HTTP server")
+    PARSER.add_argument("-P", "--client-proxy", metavar="URL", default=DEF_CLIENT_PROXY,
+                        help="HTTP proxy URL for the HTTP client")
     PARSER.add_argument("-s", "--client-read-size", metavar="BYTES", default=DEF_CLIENT_READ_SIZE,
                         help="Data read size for the HTTP client")
     PARSER.add_argument("-l", "--log-level", metavar="LEVEL", default=DEF_LOG_LEVEL,

@@ -10,7 +10,7 @@ LOGGER = logging.getLogger(__name__)
 async def client_session(app):
     """Cleanup context for an HTTP client session."""
     LOGGER.info("Creating application HTTP client session")
-    app["client_session"] = ClientSession(trust_env=True)
+    app["client_session"] = ClientSession()
     yield
     await app["client_session"].close()
     LOGGER.info("Closed application HTTP client session")
