@@ -43,17 +43,23 @@ if __name__ == "__main__":
     PARSER = ArgumentParser(prog=__package__, description=__doc__,
                             formatter_class=ArgumentDefaultsHelpFormatter)
 
-    PARSER.add_argument("-H", "--host", metavar="HOST", default=DEF_HOST,
+    PARSER.add_argument("-H", "--host", metavar="HOST",
+                        default=DEF_HOST,
                         help="TCP/IP host for the HTTP server")
-    PARSER.add_argument("-p", "--port", metavar="PORT", default=DEF_PORT,
+    PARSER.add_argument("-p", "--port", metavar="PORT", type=int,
+                        default=DEF_PORT,
                         help="TCP/IP port for the HTTP server")
-    PARSER.add_argument("-P", "--client-proxy", metavar="URL", default=DEF_CLIENT_PROXY,
+    PARSER.add_argument("-P", "--client-proxy", metavar="URL",
+                        default=DEF_CLIENT_PROXY,
                         help="HTTP proxy URL for the HTTP client")
-    PARSER.add_argument("-s", "--client-read-size", metavar="BYTES", default=DEF_CLIENT_READ_SIZE,
+    PARSER.add_argument("-s", "--client-read-size", metavar="BYTES", type=int,
+                        default=DEF_CLIENT_READ_SIZE,
                         help="Data read size for the HTTP client")
-    PARSER.add_argument("-l", "--log-level", metavar="LEVEL", default=DEF_LOG_LEVEL,
+    PARSER.add_argument("-l", "--log-level", metavar="LEVEL",
+                        default=DEF_LOG_LEVEL,
                         help="Application logging level")
-    PARSER.add_argument("-a", "--access-log-level", metavar="LEVEL", default=DEF_ACCESS_LOG_LEVEL,
+    PARSER.add_argument("-a", "--access-log-level", metavar="LEVEL",
+                        default=DEF_ACCESS_LOG_LEVEL,
                         help="HTTP server access logging level")
 
     ARGS = PARSER.parse_args()
