@@ -31,7 +31,7 @@ def main(args):
     app["client_proxy"] = args.client_proxy
     app["client_read_size"] = args.client_read_size
     app.add_routes((
-        web.get("/relay", relay_handler),
+        web.route("*", "/relay", relay_handler),
     ))
     app.cleanup_ctx.append(client_session)
 
