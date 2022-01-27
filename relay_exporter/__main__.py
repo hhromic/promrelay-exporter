@@ -16,6 +16,7 @@ DEF_PORT = 9878
 DEF_CLIENT_PROXY = None
 DEF_CLIENT_READ_SIZE = 2048
 DEF_LOG_LEVEL = "INFO"
+DEF_ACCESS_LOG_LEVEL = "WARN"
 
 
 LOGGER = logging.getLogger(__name__)
@@ -52,9 +53,13 @@ if __name__ == "__main__":
                         help="Data read size for the HTTP client")
     PARSER.add_argument("-l", "--log-level", metavar="LEVEL", default=DEF_LOG_LEVEL,
                         help="Application logging level")
+    PARSER.add_argument("-a", "--access-log-level", metavar="LEVEL", default=DEF_ACCESS_LOG_LEVEL,
+                        help="HTTP server access logging level")
 
     ARGS = PARSER.parse_args()
 
     logging.basicConfig(format=LOGGER_FORMAT, level=ARGS.log_level)
+    logging.getLogger("aiohttp.access").setLevel(ARGS.access_log_level)
+
     asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
     sys.exit(main(ARGS))
