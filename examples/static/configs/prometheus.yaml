@@ -1,0 +1,20 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: myapp
+    static_configs:
+      - targets:
+          - myapp:9100  # this is not accessible by Prometheus directly
+    metrics_path: /relay
+    relabel_configs:
+      # construct 'instance' label from original static address to scrape
+      - source_labels: [__address__]
+        target_label: instance
+      # construct 'target' parameter for the relay exporter request from 'instance' label
+      - source_labels: [instance]
+        target_label: __param_target
+        replacement: 'http://$1/metrics'
+      # re-construct address to scrape using the relay exporter address
+      - target_label: __address__
+        replacement: 'app_promrelay:9878'

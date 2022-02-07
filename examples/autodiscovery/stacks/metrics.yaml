@@ -2,18 +2,20 @@ version: '3.8'
 
 services:
   prometheus:
-    image: prom/prometheus:v2.28.1
-    command:
+    image: prom/prometheus:v2.33.1
+    command: >-
       --config.file=/prometheus.yaml
       --storage.tsdb.path=/prometheus
       --web.console.libraries=/usr/share/prometheus/console_libraries
       --web.console.templates=/usr/share/prometheus/consoles
+    user: root
     configs:
       - prometheus.yaml
     ports:
       - 9090:9090
     volumes:
       - data:/prometheus
+      - /var/run/docker.sock:/var/run/docker.sock
 
 configs:
   prometheus.yaml:
