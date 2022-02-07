@@ -7,7 +7,7 @@ from aiohttp import ClientSession
 LOGGER = logging.getLogger(__name__)
 
 
-async def client_session(app):
+async def client_session_cleanup_ctx(app):
     """Cleanup context for an HTTP client session."""
     LOGGER.info("Creating application HTTP client session")
     app["client_session"] = ClientSession(auto_decompress=False)

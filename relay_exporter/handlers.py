@@ -1,10 +1,6 @@
 """Handlers module."""
 
-import logging
 from aiohttp import hdrs, web, ClientError, InvalidURL
-
-
-LOGGER = logging.getLogger(__name__)
 
 
 async def relay_handler(request):
@@ -27,7 +23,6 @@ async def relay_handler(request):
             "proxy": client_proxy,
         }
 
-        LOGGER.debug("Relaying request to target: %s", target)
         async with client_session.request(method, target, **client_args) as client_response:
             request_response = web.StreamResponse(
                 status=client_response.status,
