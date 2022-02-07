@@ -77,4 +77,4 @@ The Prometheus relay exporter in the above architecture offers the following ben
   mechanism in Prometheus.
   * In this case, original container label metadata can be directly preserved via Prometheus relabelling.
 
-Refer to the provided [example](example/) for more information.
+Refer to the provided [examples](examples/) for more information.
