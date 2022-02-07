@@ -15,7 +15,7 @@ services:
         metrics.relay.port: 9878
         metrics.relay.scheme: http
   promrelay:
-    image: ghcr.io/hhromic/prometheus-relay-exporter:1.0.0
+    image: ghcr.io/hhromic/prometheus-relay-exporter:v1.0.0
     networks:
       - default
       - metrics
