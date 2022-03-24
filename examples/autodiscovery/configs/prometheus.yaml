@@ -13,44 +13,71 @@ scrape_configs:
           - name: label
             values:
               - metrics.enable=true  # only consider services marked for metrics collection
-    metrics_path: /relay
     relabel_configs:
       # only consider services that are not participating in the Swarm ingress network
       - source_labels:
           - __meta_dockerswarm_network_ingress
         regex: 'false'
         action: keep
-      # construct 'instance' label from discovered address and 'metrics.port' service label
+      # set target scrape configuration if provided in labels
+      - source_labels:
+          - __meta_dockerswarm_service_label_metrics_path
+        regex: '(.+)'
+        target_label: __metrics_path__
       - source_labels:
           - __address__
           - __meta_dockerswarm_service_label_metrics_port
-        regex: '(.*):[0-9]+;(.*)'
-        target_label: instance
+        regex: '(.+):[0-9]+;(.+)'
         replacement: '$1:$2'
-      # construct 'target' parameter for the relay exporter request from 'instance' label and
-      # discovered 'metrics.path' and 'metrics.scheme' service labels
+        target_label: __address__
       - source_labels:
-          - instance
-          - __meta_dockerswarm_service_label_metrics_path
           - __meta_dockerswarm_service_label_metrics_scheme
-        regex: '(.*);(.*);(.*)'
-        target_label: __param_target
-        replacement: '$3://$1$2'
-      # re-construct address to scrape using discovered 'metrics.relay.*' service labels
+        regex: '(.+)'
+        target_label: __scheme__
+      # construct the relay address to be used as target if provided in labels
       - source_labels:
           - __meta_dockerswarm_service_label_metrics_relay_host
           - __meta_dockerswarm_service_label_metrics_relay_port
-        regex: '(.*);(.*)'
-        target_label: __address__
+        regex: '(.+);(.+)'
+        target_label: __tmp_relay_address
         replacement: '$1:$2'
-      # set the scrape protocol scheme from the discovered 'metrics.relay.scheme' service label
+      # set instance label to original target address if a relay address was constructed
       - source_labels:
+          - __tmp_relay_address
+          - __address__
+        regex: '.+;(.+)'
+        target_label: instance
+      # set the relay target parameter if a relay address was constructed
+      - source_labels:
+          - __tmp_relay_address
+          - __scheme__
+          - __address__
+          - __metrics_path__
+        regex: '.+;(.+);(.+);(.+)'
+        target_label: __param_target
+        replacement: '$1://$2$3'
+      # replace target scrape configuration if a relay address was constructed
+      - source_labels:
+          - __tmp_relay_address
+        regex: '(.+)'
+        target_label: __address__
+      - source_labels:
+          - __tmp_relay_address
+        regex: '.+'
+        replacement: '/relay'
+        target_label: __metrics_path__
+      - source_labels:
+          - __tmp_relay_address
           - __meta_dockerswarm_service_label_metrics_relay_scheme
+        regex: '.+;(.+)'
         target_label: __scheme__
       # set instance information labels from standard Docker Swarm labels
       - source_labels:
           - __meta_dockerswarm_node_id
         target_label: node_id
+      - source_labels:
+          - __meta_dockerswarm_node_hostname
+        target_label: node_hostname
       - source_labels:
           - __meta_dockerswarm_service_label_com_docker_stack_namespace
         target_label: stack_namespace

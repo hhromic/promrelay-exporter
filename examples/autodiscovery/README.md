@@ -38,3 +38,22 @@ Finally, to remove everything done in this example:
     docker stack rm metrics
     docker config rm metrics-prometheus-yaml
 
+## Configuration Labels
+
+In this example, the usage of a relay exporter is optional and configurable.
+
+To configure the discovered scrape targets, the following labels are available:
+
+* `metrics.enable`: Set to `true` or `false` to enable/disable metrics collection.
+* `metrics.path`: (Optional) Set a custom metrics path for target scraping.
+* `metrics.port`: (Optional) set a custom port for target scraping.
+* `metrics.scheme`: (Optional) Set the protocol scheme for target scraping.
+* `metrics.relay.host`: (Optional) Set the host of the relay exporter to use.
+* `metrics.relay.port`: (Optional) Set the port of the relay exporter to use.
+* `metrics.relay.scheme`: (Optional) Set the protocol scheme for the relay exporter.
+
+> **Note:** The relay exporter is only used when both `metrics.relay.host` and
+> `metrics.relay.port` labels are specified.
+
+These labels must be attached at the service level, i.e. under the `deploy` key
+in the YAML stack configuration.
