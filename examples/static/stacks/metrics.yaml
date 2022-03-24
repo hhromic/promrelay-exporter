@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   prometheus:
-    image: prom/prometheus:v2.33.1
+    image: prom/prometheus:v2.34.0
     command: >-
       --config.file=/prometheus.yaml
       --storage.tsdb.path=/prometheus
