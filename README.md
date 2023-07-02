@@ -13,13 +13,19 @@ Usage examples can be found in the [`examples`](examples/) directory.
 
 ## Building
 
-To build a Docker image for the project:
+To build a release Docker image for the project:
 ```
-docker buildx build -t promrelay-exporter .
+git checkout RELEASE_TAG
+docker buildx build -t promrelay-exporter:RELEASE_TAG .
 ```
 
 > **Note:** Ready-to-use images are available in the
 > [GitHub Container Registry](https://github.com/users/hhromic/packages/container/package/promrelay-exporter).
+
+To build a snapshot locally Using [GoReleaser](https://goreleaser.com/):
+```
+goreleaser build --clean --single-target --output promrelay-exporter --snapshot
+```
 
 ## License
 

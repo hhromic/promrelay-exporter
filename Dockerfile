@@ -15,7 +15,7 @@ RUN go mod download \
 # Copy application sources and build the application
 COPY . .
 ENV CGO_ENABLED=0
-RUN goreleaser build --clean --single-target --output promrelay-exporter --snapshot
+RUN goreleaser build --clean --single-target --output promrelay-exporter
 
 # Start a new stage for the final application image
 FROM gcr.io/distroless/static-debian11 AS final
