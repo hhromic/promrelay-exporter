@@ -1,8 +1,8 @@
 version: '3.8'
 
 services:
-  myapp:
-    image: quay.io/prometheus/node-exporter:v1.3.1
+  node:
+    image: quay.io/prometheus/node-exporter:v1.6.0
     deploy:
       mode: replicated
       replicas: 3
@@ -12,7 +12,7 @@ services:
         metrics.relay.host: app_promrelay
         metrics.relay.port: 9878
   promrelay:
-    image: ghcr.io/hhromic/prometheus-relay-exporter:v1.0.0
+    image: ghcr.io/hhromic/promrelay-exporter:v2.0.0
     networks:
       - default
       - metrics

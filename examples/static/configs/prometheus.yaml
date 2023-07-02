@@ -2,10 +2,10 @@ global:
   scrape_interval: 15s
 
 scrape_configs:
-  - job_name: myapp
+  - job_name: node
     static_configs:
       - targets:
-          - myapp:9100  # this is not accessible by Prometheus directly
+          - node:9100  # this is not accessible by Prometheus directly
     metrics_path: /relay
     relabel_configs:
       # construct 'instance' label from original static address to scrape

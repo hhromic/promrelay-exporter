@@ -22,7 +22,7 @@ docker stack deploy -c stacks/app.yaml app
 
 This stack will deploy four containers:
 
-* Three Prometheus Node Exporter containers with some metrics to scrape (`myapp`).
+* Three Prometheus Node Exporter containers with some metrics to scrape (`node`).
   * Note: Metrics scraping is configured using deploy labels in the application service(s).
 * A Prometheus Relay Exporter container (`promrelay`).
 

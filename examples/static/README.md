@@ -19,7 +19,7 @@ In addition, this stack also creates a `metrics_default` overlay network.
 At this point, you can browse the running [Prometheus UI](http://localhost:9090).
 
 If you navigate to the [Targets](http://localhost:9090/targets) status page, you
-should be able to find a `myapp` job with a non-operational endpoint (DOWN).
+should be able to find a `node` job with a non-operational endpoint (DOWN).
 
 Now, to deploy the example application stack:
 ```
@@ -28,7 +28,7 @@ docker stack deploy -c stacks/app.yaml app
 
 This stack will deploy two containers:
 
-* A Prometheus Node Exporter container with some metrics to scrape (`myapp`).
+* A Prometheus Node Exporter container with some metrics to scrape (`node`).
 * A Prometheus Relay Exporter container (`promrelay`).
 
 You can now verify that Prometheus is able to scrape the metrics exposed by the
