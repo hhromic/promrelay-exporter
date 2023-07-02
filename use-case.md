@@ -2,14 +2,16 @@
 
 To demonstrate the use case of the Prometheus relay exporter, consider the
 following example initial scenario:
-```
-+---------+                           +------------+
-|  App 1  |---[ private network 1 ]---|  Database  |
-+---------+                           +------------+
-
-+---------+                           +-----------+
-|  App 2  |---[ private network 2 ]---|  Service  |
-+---------+                           +-----------+
+```mermaid
+flowchart LR
+    App1[Application 1]
+    App2[Application 2]
+    DB[(Database)]
+    Srv{{Service}}
+    Net1[/Private Network 1/]
+    Net2[/Private Network 2/]
+    App1 --- Net1 --- DB
+    App2 --- Net2 --- Srv
 ```
 
 There are two applications running on their own private networks, one
@@ -23,50 +25,52 @@ their associated services can run in their own isolated overlay network.
 
 Now, suppose that you want to add metrics monitoring using a Prometheus
 instance also on its own private network:
-```
-+---------+                           +------------+
-|  App 1  |---[ private network 1 ]---|  Database  |
-+---------+                           +------------+
-     |                                      |
-     |   +----------------------------------+
-     |   |
-     |   |                           +--------------+
-     +---+---[ private network 3 ]---|  Prometheus  |
-     |   |                           +--------------+
-     |   |
-     |   +----------------------------------+
-     |                                      |
-+---------+                           +-----------+
-|  App 2  |---[ private network 2 ]---|  Service  |
-+---------+                           +-----------+
+```mermaid
+flowchart LR
+    App1[Application 1]
+    App2[Application 2]
+    DB[(Database)]
+    Srv{{Service}}
+    Net1[/Private Network 1/]
+    Net2[/Private Network 2/]
+    App1 --- Net1 --- DB
+    App2 --- Net2 --- Srv
+
+    Prom([Prometheus])
+    Net3[/Private Network 3/]
+    Prom -.- Net3
+    Net3 -.- App1
+    Net3 -.- App2
+    Net3 -.- DB
+    Net3 -.- Srv
 ```
 
 In this new scenario, it becomes clear that neither the applications nor
 their services are isolated anymore. All the participating components are
-now unavoidably interconnected through the *private network 3*.
+now unavoidably interconnected through the *Private Network 3*.
 
 To solve this situation, we can use the Prometheus relay exporter as a
 sidecar in each application stack:
-```
-+---------+                               +------------+
-|  App 1  |---+---[ private network 1 ]---|  Database  |
-+---------+   |                           +------------+
-              |
-            +-----------------------------+
-         +--|  Prometheus Relay Exporter  |
-         |  +-----------------------------+
-         |
-         |                           +--------------+
-         +---[ private network 3 ]---|  Prometheus  |
-         |                           +--------------+
-         |
-         |  +-----------------------------+
-         +--|  Prometheus Relay Exporter  |
-            +-----------------------------+
-              |
-+---------+   |                           +-----------+
-|  App 2  |---+---[ private network 2 ]---|  Service  |
-+---------+                               +-----------+
+```mermaid
+flowchart LR
+    App1[Application 1]
+    App2[Application 2]
+    DB[(Database)]
+    Srv{{Service}}
+    Net1[/Private Network 1/]
+    Net2[/Private Network 2/]
+    App1 --- Net1 --- DB
+    App2 --- Net2 --- Srv
+
+    Prom([Prometheus])
+    PR1([Prometheus Relay Exporter 1])
+    PR2([Prometheus Relay Exporter 2])
+    Net3[/Private Network 3/]
+    Prom -.- Net3
+    Net3 -.- PR1
+    Net3 -.- PR2
+    PR1 --- Net1
+    PR2 --- Net2
 ```
 
 In this final scenario, both applications and their services **remain isolated again**.
