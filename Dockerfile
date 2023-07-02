@@ -21,7 +21,9 @@ RUN goreleaser build --clean --single-target --output promrelay-exporter
 FROM gcr.io/distroless/static-debian11 AS final
 
 # Configure image labels
-LABEL org.opencontainers.image.source=https://github.com/hhromic/promrelay-exporter
+LABEL org.opencontainers.image.source=https://github.com/hhromic/promrelay-exporter \
+      org.opencontainers.image.description="A simple Prometheus relay exporter written in Go for scraping applications in isolated networks." \
+      org.opencontainers.image.licenses=Apache-2.0
 
 # Configure default entrypoint and exposed port of the application
 ENTRYPOINT ["/promrelay-exporter"]
