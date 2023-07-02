@@ -18,7 +18,7 @@ ENV CGO_ENABLED=0
 RUN goreleaser build --clean --single-target --output promrelay-exporter
 
 # Start a new stage for the final application image
-FROM gcr.io/distroless/static-debian11 AS final
+FROM gcr.io/distroless/static-debian11:nonroot AS final
 
 # Configure image labels
 LABEL org.opencontainers.image.source=https://github.com/hhromic/promrelay-exporter \
@@ -31,6 +31,3 @@ EXPOSE 9878
 
 # Copy application binary
 COPY --from=builder /build/promrelay-exporter /promrelay-exporter
-
-# Configure default application user and group
-USER nonroot:nonroot
