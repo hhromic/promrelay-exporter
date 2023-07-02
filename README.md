@@ -9,7 +9,7 @@ The motivating use case for this project can be found [here](use-case.md).
 
 ## Usage
 
-Usage examples can be found in the [`examples`](examples/) directory.
+Usage examples can be found in the [`examples/`](examples/) directory.
 
 ## Building
 
