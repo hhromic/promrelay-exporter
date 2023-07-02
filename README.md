@@ -1,4 +1,4 @@
-# promrelay-exporter
+# Prometheus Relay Exporter
 
 A simple [Prometheus](https://prometheus.io/) relay exporter written in [Go](https://go.dev/).
 

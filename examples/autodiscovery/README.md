@@ -4,9 +4,10 @@
 > in [swarm mode](https://docs.docker.com/engine/swarm/).
 
 To run the example, first deploy the centralised Prometheus stack:
-
-    docker config create metrics-prometheus-yaml configs/prometheus.yaml
-    docker stack deploy -c stacks/metrics.yaml metrics
+```
+docker config create metrics-prometheus-yaml configs/prometheus.yaml
+docker stack deploy -c stacks/metrics.yaml metrics
+```
 
 The above will initialise a Prometheus instance running on port `9090`.
 
@@ -15,8 +16,9 @@ In addition, this stack also creates a `metrics_default` overlay network.
 At this point, you can browse the running [Prometheus UI](http://localhost:9090).
 
 Now, to deploy the example application stack:
-
-    docker stack deploy -c stacks/app.yaml app
+```
+docker stack deploy -c stacks/app.yaml app
+```
 
 This stack will deploy four containers:
 
@@ -33,10 +35,11 @@ You can now verify that Prometheus is able to scrape the metrics exposed by the
 Node Exporter containers, without having direct access to it.
 
 Finally, to remove everything done in this example:
-
-    docker stack rm app
-    docker stack rm metrics
-    docker config rm metrics-prometheus-yaml
+```
+docker stack rm app
+docker stack rm metrics
+docker config rm metrics-prometheus-yaml
+```
 
 ## Configuration Labels
 
