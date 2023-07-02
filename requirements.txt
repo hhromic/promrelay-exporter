@@ -1,2 +1,0 @@
-aiohttp[speedups]==3.8.1
-uvloop==0.16.0

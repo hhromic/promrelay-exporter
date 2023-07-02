@@ -2,10 +2,10 @@
 **
 
 # allow application sources
-!LICENSE
-!relay_exporter/**
-!requirements.txt
+!cmd/**
+!internal/**
+!go.mod
+!go.sum
 
-# ignore Python cache directories
-**/__pycache__
-**/.mypy_cache
+# allow GoReleaser configuration
+!.goreleaser.yaml

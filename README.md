@@ -1,7 +1,6 @@
-# prometheus-relay-exporter
+# promrelay-exporter
 
-A simple [Prometheus](https://prometheus.io/) relay exporter written in
-[Python 3](https://www.python.org/downloads/) and [asyncio](https://docs.python.org/3/library/asyncio.html).
+A simple [Prometheus](https://prometheus.io/) relay exporter written in [Go](https://go.dev/).
 
 This exporter uses the [multi-target exporter pattern](https://prometheus.io/docs/guides/multi-target-exporter/)
 described in the Prometheus documentation.
@@ -15,11 +14,12 @@ Usage examples can be found in the [`examples`](examples/) directory.
 ## Building
 
 To build a Docker image for the project:
-
-    docker build -t prometheus-relay-exporter .
+```
+docker buildx build -t promrelay-exporter .
+```
 
 > **Note:** Ready-to-use images are available in the
-> [GitHub Container Registry](https://github.com/users/hhromic/packages/container/package/prometheus-relay-exporter).
+> [GitHub Container Registry](https://github.com/users/hhromic/packages/container/package/promrelay-exporter).
 
 ## License
 

@@ -1,0 +1,16 @@
+project_name: promrelay-exporter
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - main: ./cmd
+    ldflags:
+      - -s -w
+      - -X {{.ModulePath}}/internal/buildinfo.BuildDate={{.Date}}
+      - -X {{.ModulePath}}/internal/buildinfo.GitBranch={{.Branch}}
+      - -X {{.ModulePath}}/internal/buildinfo.GitCommit={{.ShortCommit}}
+      - -X {{.ModulePath}}/internal/buildinfo.Version={{.Version}}
+    targets:
+      - linux_amd64
