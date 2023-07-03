@@ -15,8 +15,8 @@ Usage examples can be found in the [`examples/`](examples/) directory.
 
 To build a release Docker image for the project:
 ```
-git checkout RELEASE_TAG
-docker buildx build -t promrelay-exporter:RELEASE_TAG .
+git checkout vX.Y.Z
+docker buildx build -t ghcr.io/hhromic/promrelay-exporter:vX.Y.Z .
 ```
 
 > **Note:** Ready-to-use images are available in the
