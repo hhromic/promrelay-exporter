@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httputil"
+	"net/url"
 
 	"github.com/hhromic/promrelay-exporter/internal/metrics"
 	"golang.org/x/exp/slog"
@@ -21,19 +22,31 @@ func RelayHandler() http.Handler {
 	}
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		ctx := r.Context()
+		query := r.URL.Query()
 
-		target, ok := TargetFromContext(ctx)
-		if !ok || target == nil {
-			err := fmt.Errorf("no target in request context")
-			handleErr(w, err, http.StatusInternalServerError)
+		if len(query["target"]) != 1 || query["target"][0] == "" {
+			handleErr(w,
+				fmt.Errorf("'target' parameter is missing or is specified multiple times"),
+				http.StatusBadRequest,
+			)
+			return
+		}
+
+		target, err := url.ParseRequestURI(query["target"][0])
+		if err != nil {
+			handleErr(w,
+				fmt.Errorf("'target' parameter is not a valid URL: %w", err),
+				http.StatusBadRequest,
+			)
 			return
 		}
 
 		rp := &httputil.ReverseProxy{
 			ErrorHandler: func(w http.ResponseWriter, r *http.Request, err error) {
-				err = fmt.Errorf("target relay error: %w", err)
-				handleErr(w, err, http.StatusBadGateway)
+				handleErr(w,
+					fmt.Errorf("target relay error: %w", err),
+					http.StatusBadGateway,
+				)
 			},
 			Rewrite: func(r *httputil.ProxyRequest) {
 				r.SetXForwarded()
