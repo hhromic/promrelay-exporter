@@ -25,7 +25,7 @@ func NewRouter() http.Handler {
 	r.Use(middleware.Recoverer)
 
 	r.Mount(MetricsHandlerPattern, promhttp.Handler())
-	r.With(RelayRequestTimer).Mount(RelayHandlerPattern, RelayHandler())
+	r.Mount(RelayHandlerPattern, RelayHandler())
 
 	return r
 }

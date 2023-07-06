@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"net/url"
+	"time"
 
 	"github.com/hhromic/promrelay-exporter/internal/metrics"
 	"golang.org/x/exp/slog"
@@ -22,6 +23,15 @@ func RelayHandler() http.Handler {
 	}
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var target *url.URL
+
+		s := time.Now()
+		defer func() {
+			d := time.Since(s)
+			slog.Debug("relay request completed", "target", target, "duration", d)
+			metrics.RelayRequestDuration.Observe(d.Seconds())
+		}()
+
 		query := r.URL.Query()
 
 		if len(query["target"]) != 1 || query["target"][0] == "" {
