@@ -36,8 +36,7 @@ func main() {
 		panic(err)
 	}
 
-	_, err := maxprocs.Set()
-	if err != nil {
+	if _, err := maxprocs.Set(); err != nil {
 		slog.Warn("failed to set GOMAXPROCS", "err", err)
 	}
 
