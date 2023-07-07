@@ -29,6 +29,7 @@ type args struct {
 
 func main() {
 	var args args
+
 	arg.MustParse(&args)
 
 	if err := logger.SlogSetDefault(os.Stderr, args.LogHandler, args.LogLevel); err != nil {
@@ -55,6 +56,7 @@ func main() {
 	r := server.NewRouter()
 
 	slog.Info("starting HTTP server", "addr", args.ListenAddress)
+
 	if err := server.ListenAndServe(ctx, args.ListenAddress, r); err != nil && !errors.Is(err, context.Canceled) {
 		slog.Error("error running HTTP server", "err", err)
 	} else {

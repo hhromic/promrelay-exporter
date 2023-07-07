@@ -33,7 +33,6 @@ func RelayHandler() http.Handler {
 		}()
 
 		query := r.URL.Query()
-
 		if len(query["target"]) != 1 || query["target"][0] == "" {
 			handleErr(w,
 				fmt.Errorf("'target' parameter is missing or is specified multiple times"),
