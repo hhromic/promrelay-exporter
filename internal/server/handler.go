@@ -65,7 +65,7 @@ func RelayHandler() http.Handler {
 		target, err := url.ParseRequestURI(tgt)
 		if err != nil {
 			handleErr(w,
-				fmt.Errorf("query parameter %q is not a valid URL: %w", TargetQueryParamName, err),
+				fmt.Errorf("target is not a valid URL: %w", err),
 				http.StatusBadRequest,
 			)
 			return

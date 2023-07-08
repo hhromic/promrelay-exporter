@@ -21,9 +21,7 @@ const (
 // NewRouter creates a top-level http.Handler router for the application.
 func NewRouter() http.Handler {
 	r := chi.NewRouter()
-
 	r.Use(middleware.Recoverer)
-
 	r.Mount(MetricsHandlerPattern, promhttp.Handler())
 	r.Mount(RelayHandlerPattern, RelayHandler())
 

@@ -25,7 +25,7 @@ const (
 
 // Errors used by the logger package.
 var (
-	// ErrUnknownHandlerName is returned when an unknown handler name is used.
+	// ErrUnknownHandlerName is returned when an unknown slog handler name is used.
 	ErrUnknownHandlerName = errors.New("unknown handler name")
 )
 
