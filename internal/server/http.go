@@ -16,7 +16,7 @@ import (
 const (
 	// ShutdownTimeout is the maximum time to wait for the HTTP server to shutdown.
 	ShutdownTimeout time.Duration = 30 * time.Second
-	// ReadHeaderTimeout is the maximum time to wait for reading read an HTTP request header.
+	// ReadHeaderTimeout is the maximum time to wait for reading an HTTP request header.
 	ReadHeaderTimeout time.Duration = 60 * time.Second
 )
 

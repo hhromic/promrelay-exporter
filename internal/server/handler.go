@@ -14,6 +14,11 @@ import (
 	"golang.org/x/exp/slog"
 )
 
+const (
+	// ResponseHeaderTimeout is the maximum time to wait for reading an HTTP response header.
+	ResponseHeaderTimeout = 60 * time.Second
+)
+
 // RelayHandler is an http.Handler for target relay requests.
 func RelayHandler() http.Handler {
 	handleErr := func(w http.ResponseWriter, err error, status int) {
@@ -21,6 +26,9 @@ func RelayHandler() http.Handler {
 		slog.Error("relay handler error", "err", err, "status", status)
 		metrics.RelayRequestErrors.Add(1)
 	}
+
+	transport := http.DefaultTransport.(*http.Transport).Clone()
+	transport.ResponseHeaderTimeout = ResponseHeaderTimeout
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var target *url.URL
@@ -62,6 +70,7 @@ func RelayHandler() http.Handler {
 				r.Out.URL = target
 				r.Out.Host = target.Host
 			},
+			Transport: transport,
 		}
 
 		rp.ServeHTTP(w, r)
