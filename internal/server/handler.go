@@ -16,6 +16,11 @@ import (
 )
 
 const (
+	// TargetQueryParamName is the request query parameter name used for the relay target.
+	TargetQueryParamName = "target"
+)
+
+const (
 	// ResponseHeaderTimeout is the maximum time to wait for reading an HTTP response header.
 	ResponseHeaderTimeout = 60 * time.Second
 )
@@ -48,10 +53,10 @@ func RelayHandler() http.Handler {
 		}()
 
 		q := r.URL.Query()
-		tgt := q.Get("target")
+		tgt := q.Get(TargetQueryParamName)
 		if tgt == "" {
 			handleErr(w,
-				fmt.Errorf("%w: %q", ErrQueryParamMissing, "target"),
+				fmt.Errorf("%w: %q", ErrQueryParamMissing, TargetQueryParamName),
 				http.StatusBadRequest,
 			)
 			return
@@ -60,7 +65,7 @@ func RelayHandler() http.Handler {
 		target, err := url.ParseRequestURI(tgt)
 		if err != nil {
 			handleErr(w,
-				fmt.Errorf("query parameter %q is not a valid URL: %w", "target", err),
+				fmt.Errorf("query parameter %q is not a valid URL: %w", TargetQueryParamName, err),
 				http.StatusBadRequest,
 			)
 			return
