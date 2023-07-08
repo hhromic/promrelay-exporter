@@ -66,7 +66,7 @@ func (h *Handler) UnmarshalText(data []byte) error {
 // using the specified minimum logging level. This function also renames the built-in attribute
 // [slog.TimeKey] to "ts" for shorter logs output.
 func SlogSetDefault(w io.Writer, handler Handler, level slog.Level) error {
-	o := slog.HandlerOptions{
+	opts := &slog.HandlerOptions{
 		Level: level,
 		ReplaceAttr: func(groups []string, a slog.Attr) slog.Attr {
 			if a.Key == slog.TimeKey {
@@ -79,9 +79,9 @@ func SlogSetDefault(w io.Writer, handler Handler, level slog.Level) error {
 
 	switch handler {
 	case HandlerText:
-		slog.SetDefault(slog.New(slog.NewTextHandler(w, &o)))
+		slog.SetDefault(slog.New(slog.NewTextHandler(w, opts)))
 	case HandlerJSON:
-		slog.SetDefault(slog.New(slog.NewJSONHandler(w, &o)))
+		slog.SetDefault(slog.New(slog.NewJSONHandler(w, opts)))
 	}
 
 	return nil
