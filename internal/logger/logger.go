@@ -4,6 +4,7 @@
 package logger
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"strings"
@@ -20,6 +21,12 @@ const (
 	HandlerText Handler = iota
 	// HandlerJSON represents [slog.JSONHandler] which outputs logs in standard JSON format.
 	HandlerJSON
+)
+
+// Errors used by the logger package.
+var (
+	// ErrUnknownHandlerName is returned when an unknown handler name is used.
+	ErrUnknownHandlerName = errors.New("unknown handler name")
 )
 
 // String returns a name for the slog handler.
@@ -49,7 +56,7 @@ func (h *Handler) UnmarshalText(data []byte) error {
 	case "json":
 		*h = HandlerJSON
 	default:
-		return fmt.Errorf("handler string %q: unknown name", str)
+		return fmt.Errorf("%w: %q", ErrUnknownHandlerName, str)
 	}
 
 	return nil
