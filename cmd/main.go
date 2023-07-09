@@ -12,13 +12,13 @@ import (
 	"syscall"
 
 	"github.com/alexflint/go-arg"
-	"github.com/hhromic/promrelay-exporter/internal/buildinfo"
-	"github.com/hhromic/promrelay-exporter/internal/logger"
-	"github.com/hhromic/promrelay-exporter/internal/server"
+	"github.com/hhromic/promrelay-exporter/v2/internal/buildinfo"
+	"github.com/hhromic/promrelay-exporter/v2/internal/logger"
+	"github.com/hhromic/promrelay-exporter/v2/internal/server"
 	"go.uber.org/automaxprocs/maxprocs"
 	"golang.org/x/exp/slog"
 
-	_ "github.com/hhromic/promrelay-exporter/internal/metrics" // initialize collectors
+	_ "github.com/hhromic/promrelay-exporter/v2/internal/metrics" // initialize collectors
 )
 
 type args struct {

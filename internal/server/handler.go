@@ -11,7 +11,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/hhromic/promrelay-exporter/internal/metrics"
+	"github.com/hhromic/promrelay-exporter/v2/internal/metrics"
 	"golang.org/x/exp/slog"
 )
 

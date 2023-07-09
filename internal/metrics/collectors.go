@@ -4,7 +4,7 @@
 package metrics
 
 import (
-	"github.com/hhromic/promrelay-exporter/internal/buildinfo"
+	"github.com/hhromic/promrelay-exporter/v2/internal/buildinfo"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 )

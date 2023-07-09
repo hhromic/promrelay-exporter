@@ -1,4 +1,4 @@
-module github.com/hhromic/promrelay-exporter
+module github.com/hhromic/promrelay-exporter/v2
 
 go 1.20
 
