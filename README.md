@@ -1,6 +1,7 @@
 # Prometheus Relay Exporter
 
-A simple [Prometheus](https://prometheus.io/) relay exporter written in [Go](https://go.dev/).
+A simple [Prometheus](https://prometheus.io/) relay exporter written in [Go](https://go.dev/) for
+scraping applications in isolated networks.
 
 This exporter uses the [multi-target exporter pattern](https://prometheus.io/docs/guides/multi-target-exporter/)
 described in the Prometheus documentation.
