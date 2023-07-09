@@ -22,7 +22,7 @@ FROM gcr.io/distroless/static-debian11:nonroot AS final
 
 # Configure image labels
 LABEL org.opencontainers.image.source=https://github.com/hhromic/promrelay-exporter \
-      org.opencontainers.image.description="A simple Prometheus relay exporter written in Go for scraping applications in isolated networks." \
+      org.opencontainers.image.description="Simple Prometheus relay exporter written in Go for scraping applications in isolated networks." \
       org.opencontainers.image.licenses=Apache-2.0
 
 # Configure default entrypoint and exposed port of the application
