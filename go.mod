@@ -23,3 +23,7 @@ require (
 	golang.org/x/sys v0.10.0 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 )
+
+retract (
+    v2.0.0 // Published with wrong module version.
+)
