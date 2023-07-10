@@ -31,7 +31,7 @@ var (
 	ErrQueryParamMissing = errors.New("missing query parameter")
 )
 
-// RelayHandler is an http.Handler for target relay requests.
+// RelayHandler is an [http.Handler] for target relay requests.
 func RelayHandler() http.Handler {
 	handleErr := func(w http.ResponseWriter, err error, status int) {
 		http.Error(w, err.Error(), status)
