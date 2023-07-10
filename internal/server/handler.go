@@ -16,8 +16,8 @@ import (
 )
 
 const (
-	// TargetQueryParam is the request query parameter used for providing the relay target.
-	TargetQueryParam = "target"
+	// QueryParamTarget is the request query parameter used for providing the relay target.
+	QueryParamTarget = "target"
 )
 
 const (
@@ -53,10 +53,10 @@ func RelayHandler() http.Handler {
 		}()
 
 		q := r.URL.Query()
-		tgt := q.Get(TargetQueryParam)
+		tgt := q.Get(QueryParamTarget)
 		if tgt == "" {
 			handleErr(w,
-				fmt.Errorf("%w: %q", ErrQueryParamMissing, TargetQueryParam),
+				fmt.Errorf("%w: %q", ErrQueryParamMissing, QueryParamTarget),
 				http.StatusBadRequest,
 			)
 			return
