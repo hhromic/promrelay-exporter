@@ -28,7 +28,7 @@ const (
 // Errors used by handlers in the server package.
 var (
 	// ErrQueryParamMissing is returned when a request query parameter is missing.
-	ErrQueryParamMissing = errors.New("missing query parameter")
+	ErrQueryParamMissing = errors.New("query parameter missing")
 )
 
 // RelayHandler is an [http.Handler] for target relay requests.
