@@ -7,7 +7,7 @@ require (
 	github.com/go-chi/chi/v5 v5.0.8
 	github.com/prometheus/client_golang v1.16.0
 	go.uber.org/automaxprocs v1.5.2
-	golang.org/x/exp v0.0.0-20230626212559-97b1e661b5df
+	golang.org/x/exp v0.0.0-20230711153332-06a737ee72cb
 	golang.org/x/sync v0.3.0
 )
 
@@ -24,6 +24,4 @@ require (
 	google.golang.org/protobuf v1.31.0 // indirect
 )
 
-retract (
-    v2.0.0 // Published with wrong module version.
-)
+retract v2.0.0 // Published with wrong module version.
