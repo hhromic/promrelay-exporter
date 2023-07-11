@@ -12,7 +12,7 @@ services:
         metrics.relay.host: app_promrelay
         metrics.relay.port: 9878
   promrelay:
-    image: ghcr.io/hhromic/promrelay-exporter:v2.0.0
+    image: ghcr.io/hhromic/promrelay-exporter:v2.2.0
     networks:
       - default
       - metrics
