@@ -1,8 +1,8 @@
 # Start a new stage for building the application
-FROM golang:1.20.5-bullseye AS builder
+FROM golang:1.20.6-bullseye AS builder
 
 # Install GoReleaser
-RUN go install github.com/goreleaser/goreleaser@v1.19.1
+RUN go install github.com/goreleaser/goreleaser@v1.19.2
 
 # Set a well-known building directory
 WORKDIR /build
