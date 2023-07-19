@@ -4,10 +4,10 @@ go 1.20
 
 require (
 	github.com/alexflint/go-arg v1.4.3
-	github.com/go-chi/chi/v5 v5.0.8
+	github.com/go-chi/chi/v5 v5.0.10
 	github.com/prometheus/client_golang v1.16.0
-	go.uber.org/automaxprocs v1.5.2
-	golang.org/x/exp v0.0.0-20230711153332-06a737ee72cb
+	go.uber.org/automaxprocs v1.5.3
+	golang.org/x/exp v0.0.0-20230713183714-613f0c0eb8a1
 	golang.org/x/sync v0.3.0
 )
 
