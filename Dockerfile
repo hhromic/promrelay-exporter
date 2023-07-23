@@ -1,5 +1,5 @@
 # Start a new stage for building the application
-FROM golang:1.20.6-bullseye AS builder
+FROM golang:1.20.6 AS builder
 
 # Install GoReleaser
 RUN go install github.com/goreleaser/goreleaser@v1.19.2
@@ -18,7 +18,7 @@ ENV CGO_ENABLED=0
 RUN goreleaser build --clean --single-target --output promrelay-exporter
 
 # Start a new stage for the final application image
-FROM gcr.io/distroless/static-debian11:nonroot AS final
+FROM cgr.dev/chainguard/static:latest AS final
 
 # Configure image labels
 LABEL org.opencontainers.image.source=https://github.com/hhromic/promrelay-exporter \
