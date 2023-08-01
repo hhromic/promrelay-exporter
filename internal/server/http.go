@@ -33,15 +33,16 @@ func ListenAndServe(ctx context.Context, addr string, handler http.Handler) erro
 
 	egrp.Go(func() error {
 		<-ctx.Done()
+		errs := []error{ctx.Err()}
 
 		ctx, cancel := context.WithTimeout(context.Background(), ShutdownTimeout)
 		defer cancel()
 
 		if err := srv.Shutdown(ctx); err != nil {
-			return fmt.Errorf("shutdown: %w", err)
+			errs = append(errs, fmt.Errorf("shutdown: %w", err))
 		}
 
-		return nil
+		return errors.Join(errs...)
 	})
 
 	egrp.Go(func() error {
