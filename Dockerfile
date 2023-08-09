@@ -1,5 +1,5 @@
 # Start a new stage for building the application
-FROM golang:1.20.6 AS builder
+FROM golang:1.21.0 AS builder
 
 # Install GoReleaser
 RUN go install github.com/goreleaser/goreleaser@v1.19.2
