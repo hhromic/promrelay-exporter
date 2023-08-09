@@ -7,9 +7,8 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"strings"
-
-	"golang.org/x/exp/slog"
 )
 
 // Handler represents a supported slog handler.

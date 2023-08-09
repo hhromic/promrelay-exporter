@@ -6,6 +6,7 @@ package main
 import (
 	"context"
 	"errors"
+	"log/slog"
 	"os"
 	"os/signal"
 	"runtime"
@@ -16,7 +17,6 @@ import (
 	"github.com/hhromic/promrelay-exporter/v2/internal/logger"
 	"github.com/hhromic/promrelay-exporter/v2/internal/server"
 	"go.uber.org/automaxprocs/maxprocs"
-	"golang.org/x/exp/slog"
 
 	_ "github.com/hhromic/promrelay-exporter/v2/internal/metrics" // initialize collectors
 )

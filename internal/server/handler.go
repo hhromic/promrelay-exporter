@@ -6,13 +6,13 @@ package server
 import (
 	"errors"
 	"fmt"
+	"log/slog"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
 	"time"
 
 	"github.com/hhromic/promrelay-exporter/v2/internal/metrics"
-	"golang.org/x/exp/slog"
 )
 
 const (
