@@ -6,6 +6,7 @@ package main
 import (
 	"context"
 	"errors"
+	"fmt"
 	"log/slog"
 	"os"
 	"os/signal"
@@ -36,6 +37,13 @@ func main() {
 		panic(err)
 	}
 
+	if err := appMain(args); err != nil {
+		slog.Error("application error", "err", err)
+		os.Exit(1)
+	}
+}
+
+func appMain(args args) error {
 	if _, err := maxprocs.Set(); err != nil {
 		slog.Warn("failed to set GOMAXPROCS", "err", err)
 	}
@@ -57,8 +65,10 @@ func main() {
 	slog.Info("starting HTTP server", "addr", args.ListenAddress)
 
 	if err := server.ListenAndServe(ctx, args.ListenAddress, r); err != nil && !errors.Is(err, context.Canceled) {
-		slog.Error("error running HTTP server", "err", err)
-	} else {
-		slog.Info("finished")
+		return fmt.Errorf("error running HTTP server: %w", err)
 	}
+
+	slog.Info("finished")
+
+	return nil
 }
