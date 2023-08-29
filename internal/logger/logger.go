@@ -9,6 +9,8 @@ import (
 	"io"
 	"log/slog"
 	"strings"
+
+	"github.com/lmittmann/tint"
 )
 
 // Handler represents a supported slog handler.
@@ -18,6 +20,8 @@ type Handler int
 const (
 	// HandlerText represents [slog.TextHandler] which outputs logs in key=value format.
 	HandlerText Handler = iota
+	// HandlerTint represents [slog.Handler] which outputs logs in colorized key=value format.
+	HandlerTint
 	// HandlerJSON represents [slog.JSONHandler] which outputs logs in standard JSON format.
 	HandlerJSON
 )
@@ -33,6 +37,8 @@ func (h Handler) String() string {
 	switch h {
 	case HandlerText:
 		return "text"
+	case HandlerTint:
+		return "tint"
 	case HandlerJSON:
 		return "json"
 	default:
@@ -52,6 +58,8 @@ func (h *Handler) UnmarshalText(data []byte) error {
 	switch strings.ToLower(str) {
 	case "text":
 		*h = HandlerText
+	case "tint":
+		*h = HandlerTint
 	case "json":
 		*h = HandlerJSON
 	default:
@@ -80,6 +88,12 @@ func SlogSetDefault(writer io.Writer, handler Handler, level slog.Leveler) error
 	switch handler {
 	case HandlerText:
 		slog.SetDefault(slog.New(slog.NewTextHandler(writer, opts)))
+	case HandlerTint:
+		topts := &tint.Options{ //nolint:exhaustruct,exhaustivestruct
+			AddSource: opts.AddSource,
+			Level:     opts.Level,
+		}
+		slog.SetDefault(slog.New(tint.NewHandler(writer, topts)))
 	case HandlerJSON:
 		slog.SetDefault(slog.New(slog.NewJSONHandler(writer, opts)))
 	}
