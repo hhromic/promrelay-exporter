@@ -61,12 +61,13 @@ func (h *Handler) UnmarshalText(data []byte) error {
 	return nil
 }
 
-// SlogSetDefault sets the global slog logger to output to w, using the specified log handler and
-// using the specified minimum logging level. This function also renames the built-in attribute
+// SlogSetDefault sets the global slog logger to output to writer, using the specified log handler
+// and the specified minimum logging level. This function also renames the built-in attribute
 // [slog.TimeKey] to "ts" for shorter logs output.
-func SlogSetDefault(w io.Writer, handler Handler, level slog.Level) error {
+func SlogSetDefault(writer io.Writer, handler Handler, level slog.Leveler) error {
 	opts := &slog.HandlerOptions{
-		Level: level,
+		AddSource: false,
+		Level:     level,
 		ReplaceAttr: func(groups []string, a slog.Attr) slog.Attr {
 			if a.Key == slog.TimeKey {
 				a.Key = "ts"
@@ -78,9 +79,9 @@ func SlogSetDefault(w io.Writer, handler Handler, level slog.Level) error {
 
 	switch handler {
 	case HandlerText:
-		slog.SetDefault(slog.New(slog.NewTextHandler(w, opts)))
+		slog.SetDefault(slog.New(slog.NewTextHandler(writer, opts)))
 	case HandlerJSON:
-		slog.SetDefault(slog.New(slog.NewJSONHandler(w, opts)))
+		slog.SetDefault(slog.New(slog.NewJSONHandler(writer, opts)))
 	}
 
 	return nil

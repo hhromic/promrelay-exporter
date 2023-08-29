@@ -33,16 +33,10 @@ var (
 
 // RelayHandler is an [http.Handler] for target relay requests.
 func RelayHandler() http.Handler {
-	handleErr := func(w http.ResponseWriter, err error, status int) {
-		http.Error(w, err.Error(), status)
-		slog.Error("relay handler error", "err", err, "status", status)
-		metrics.RelayRequestErrors.Add(1)
-	}
-
-	transport := http.DefaultTransport.(*http.Transport).Clone()
+	transport := http.DefaultTransport.(*http.Transport).Clone() //nolint:forcetypeassert
 	transport.ResponseHeaderTimeout = ResponseHeaderTimeout
 
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	return http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
 		var target *url.URL
 
 		s := time.Now()
@@ -52,26 +46,14 @@ func RelayHandler() http.Handler {
 			metrics.RelayRequestDuration.Observe(d.Seconds())
 		}()
 
-		q := r.URL.Query()
-		tgt := q.Get(QueryParamTarget)
-		if tgt == "" {
-			handleErr(w,
-				fmt.Errorf("%w: %q", ErrQueryParamMissing, QueryParamTarget),
-				http.StatusBadRequest,
-			)
-			return
-		}
-
-		target, err := url.ParseRequestURI(tgt)
+		target, err := getTarget(request)
 		if err != nil {
-			handleErr(w,
-				fmt.Errorf("target is not a valid URL: %w", err),
-				http.StatusBadRequest,
-			)
+			handleErr(writer, err, http.StatusBadRequest)
+
 			return
 		}
 
-		rp := &httputil.ReverseProxy{
+		rproxy := &httputil.ReverseProxy{ //nolint:exhaustruct,exhaustivestruct
 			ErrorHandler: func(w http.ResponseWriter, r *http.Request, err error) {
 				handleErr(w,
 					fmt.Errorf("target relay error: %w", err),
@@ -86,6 +68,26 @@ func RelayHandler() http.Handler {
 			Transport: transport,
 		}
 
-		rp.ServeHTTP(w, r)
+		rproxy.ServeHTTP(writer, request)
 	})
+}
+
+func getTarget(r *http.Request) (*url.URL, error) {
+	t := r.URL.Query().Get(QueryParamTarget)
+	if t == "" {
+		return nil, fmt.Errorf("%w: %q", ErrQueryParamMissing, QueryParamTarget)
+	}
+
+	target, err := url.ParseRequestURI(t)
+	if err != nil {
+		return nil, fmt.Errorf("target is not a valid URL: %w", err)
+	}
+
+	return target, nil
+}
+
+func handleErr(w http.ResponseWriter, err error, status int) {
+	http.Error(w, err.Error(), status)
+	slog.Error("relay handler error", "err", err, "status", status)
+	metrics.RelayRequestErrors.Add(1)
 }

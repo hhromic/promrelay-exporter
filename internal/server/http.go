@@ -23,7 +23,7 @@ const (
 // ListenAndServe listens on the TCP network address addr and serves the handler.
 // This function implements graceful shutdown when the passed ctx is done.
 func ListenAndServe(ctx context.Context, addr string, handler http.Handler) error {
-	srv := &http.Server{
+	srv := &http.Server{ //nolint:exhaustruct,exhaustivestruct
 		Addr:              addr,
 		Handler:           handler,
 		ReadHeaderTimeout: ReadHeaderTimeout,
@@ -38,7 +38,7 @@ func ListenAndServe(ctx context.Context, addr string, handler http.Handler) erro
 		ctx, cancel := context.WithTimeout(context.Background(), ShutdownTimeout)
 		defer cancel()
 
-		if err := srv.Shutdown(ctx); err != nil {
+		if err := srv.Shutdown(ctx); err != nil { //nolint:contextcheck
 			errs = append(errs, fmt.Errorf("shutdown: %w", err))
 		}
 

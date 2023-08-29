@@ -16,12 +16,12 @@ import (
 	"github.com/alexflint/go-arg"
 	"github.com/hhromic/promrelay-exporter/v2/internal/buildinfo"
 	"github.com/hhromic/promrelay-exporter/v2/internal/logger"
+	_ "github.com/hhromic/promrelay-exporter/v2/internal/metrics" // initialize collectors
 	"github.com/hhromic/promrelay-exporter/v2/internal/server"
 	"go.uber.org/automaxprocs/maxprocs"
-
-	_ "github.com/hhromic/promrelay-exporter/v2/internal/metrics" // initialize collectors
 )
 
+//nolint:lll,tagalign
 type args struct {
 	ListenAddress string         `arg:"--listen-address,env:LISTEN_ADDRESS" default:":9878" placeholder:"ADDRESS" help:"listen address for the HTTP server"`
 	LogHandler    logger.Handler `arg:"--log-handler,env:LOG_HANDLER" default:"text" placeholder:"HANDLER" help:"application logging handler"`

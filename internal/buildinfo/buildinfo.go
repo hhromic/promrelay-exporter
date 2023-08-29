@@ -8,6 +8,8 @@ import (
 )
 
 // Build info vars populated by GoReleaser.
+//
+//nolint:gochecknoglobals
 var (
 	BuildDate = "unknown"
 	GitBranch = "unknown"
@@ -15,7 +17,7 @@ var (
 	Version   = "unknown"
 )
 
-var (
-	// GoVersion is the version of the Go runtime.
-	GoVersion = runtime.Version()
-)
+// GoVersion is the version of the Go runtime.
+//
+//nolint:gochecknoglobals
+var GoVersion = runtime.Version()
