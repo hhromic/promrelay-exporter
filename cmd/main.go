@@ -65,7 +65,7 @@ func appMain(args args) error {
 	slog.Info("starting HTTP server", "addr", args.ListenAddress)
 
 	if err := server.ListenAndServe(ctx, args.ListenAddress, r); err != nil && !errors.Is(err, context.Canceled) {
-		return fmt.Errorf("error running HTTP server: %w", err)
+		return fmt.Errorf("server listen and serve: %w", err)
 	}
 
 	slog.Info("finished")

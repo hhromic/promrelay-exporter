@@ -9,10 +9,8 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promauto"
 )
 
-const (
-	// Namespace is the metrics namespace for the application.
-	Namespace = "promrelay"
-)
+// Namespace is the metrics namespace for the application.
+const Namespace = "promrelay"
 
 // BuildInfo is the collector for build information of the application.
 //
