@@ -24,7 +24,7 @@ import (
 //nolint:lll,tagalign
 type args struct {
 	ListenAddress string         `arg:"--listen-address,env:LISTEN_ADDRESS" default:":9878" placeholder:"ADDRESS" help:"listen address for the HTTP server"`
-	LogHandler    logger.Handler `arg:"--log-handler,env:LOG_HANDLER" default:"text" placeholder:"HANDLER" help:"application logging handler"`
+	LogHandler    logger.Handler `arg:"--log-handler,env:LOG_HANDLER" default:"auto" placeholder:"HANDLER" help:"application logging handler"`
 	LogLevel      slog.Level     `arg:"--log-level,env:LOG_LEVEL" default:"info" placeholder:"LEVEL" help:"application logging level"`
 }
 
