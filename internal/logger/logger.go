@@ -109,7 +109,7 @@ func SlogSetDefault(writer io.Writer, handler Handler, level slog.Leveler) error
 	case HandlerJSON:
 		slog.SetDefault(slog.New(slog.NewJSONHandler(writer, opts)))
 	case HandlerTint:
-		topts := &tint.Options{ //nolint:exhaustruct,exhaustivestruct
+		topts := &tint.Options{ //nolint:exhaustruct
 			AddSource: opts.AddSource,
 			Level:     opts.Level,
 		}

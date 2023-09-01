@@ -35,7 +35,7 @@ var BuildInfo = promauto.NewGaugeFunc(
 
 // RelayRequestDuration is the collector for the distribution of relay request durations.
 //
-//nolint:exhaustruct,exhaustivestruct,gochecknoglobals
+//nolint:exhaustruct,gochecknoglobals
 var RelayRequestDuration = promauto.NewHistogram(
 	prometheus.HistogramOpts{
 		Namespace:   Namespace,

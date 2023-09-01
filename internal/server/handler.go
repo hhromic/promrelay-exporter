@@ -53,7 +53,7 @@ func RelayHandler() http.Handler {
 			return
 		}
 
-		rproxy := &httputil.ReverseProxy{ //nolint:exhaustruct,exhaustivestruct
+		rproxy := &httputil.ReverseProxy{ //nolint:exhaustruct
 			ErrorHandler: func(w http.ResponseWriter, r *http.Request, err error) {
 				handleErr(w,
 					fmt.Errorf("target relay error: %w", err),
