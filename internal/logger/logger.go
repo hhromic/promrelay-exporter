@@ -12,7 +12,7 @@ import (
 	"strings"
 
 	"github.com/lmittmann/tint"
-	"github.com/mattn/go-isatty"
+	"golang.org/x/term"
 )
 
 // Handler represents a supported slog handler.
@@ -96,10 +96,8 @@ func SlogSetDefault(writer io.Writer, handler Handler, level slog.Leveler) error
 	if handler == HandlerAuto {
 		handler = HandlerText
 
-		if f, ok := writer.(*os.File); ok {
-			if isatty.IsTerminal(f.Fd()) {
-				handler = HandlerTint
-			}
+		if f, ok := writer.(*os.File); ok && term.IsTerminal(int(f.Fd())) {
+			handler = HandlerTint
 		}
 	}
 
