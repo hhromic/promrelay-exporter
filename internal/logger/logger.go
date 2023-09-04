@@ -9,7 +9,6 @@ import (
 	"io"
 	"log/slog"
 	"os"
-	"strings"
 
 	"github.com/lmittmann/tint"
 	"golang.org/x/term"
@@ -58,17 +57,17 @@ func (h Handler) MarshalText() ([]byte, error) {
 }
 
 // UnmarshalText implements [encoding.TextUnmarshaler].
-// It accepts any string produced by [Handler.MarshalText], ignoring case.
+// It accepts any string produced by [Handler.MarshalText].
 func (h *Handler) UnmarshalText(b []byte) error {
 	str := string(b)
-	switch strings.ToLower(str) {
-	case "text":
+	switch str {
+	case HandlerText.String():
 		*h = HandlerText
-	case "json":
+	case HandlerJSON.String():
 		*h = HandlerJSON
-	case "tint":
+	case HandlerTint.String():
 		*h = HandlerTint
-	case "auto":
+	case HandlerAuto.String():
 		*h = HandlerAuto
 	default:
 		return fmt.Errorf("%w: %q", ErrUnknownHandlerName, str)
