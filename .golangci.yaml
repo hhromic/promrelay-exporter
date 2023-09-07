@@ -1,12 +1,14 @@
 linters:
   enable-all: true
   disable:
-    - deadcode
-    - depguard
-    - exhaustivestruct
-    - golint
-    - maligned
-    - nosnakecase
-    - scopelint
-    - structcheck
-    - varcheck
+    - deadcode  # replaced by 'unused'
+    - depguard  # not currently used
+    - exhaustivestruct  # replaced by 'exhaustruct'
+    - golint  # replaced by 'revive'
+    - ifshort  # deprecated by the owner
+    - interfacer  # archived by the owner
+    - maligned  # replaced by 'govet'
+    - nosnakecase  # replaced by 'revive'
+    - scopelint  # replaced by 'exportloopref'
+    - structcheck  # replaced by 'unused'
+    - varcheck  # replaced by 'unused'
