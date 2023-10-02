@@ -2,8 +2,8 @@
 FROM golang:1.21.1 AS builder
 
 # Download and install GoReleaser
-RUN TGZ_URL=https://github.com/goreleaser/goreleaser/releases/download/v1.20.0/goreleaser_Linux_x86_64.tar.gz \
-    && curl -L "${TGZ_URL}" | tar zxf - -C /usr/bin goreleaser
+RUN TGZ_URL=https://github.com/goreleaser/goreleaser/releases/download/v1.21.2/goreleaser_Linux_x86_64.tar.gz \
+    && curl --proto '=https' --tlsv1.2 -L "${TGZ_URL}" | tar zxf - -C /usr/bin goreleaser
 
 # Set a well-known building directory
 WORKDIR /build
