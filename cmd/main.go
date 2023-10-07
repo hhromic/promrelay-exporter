@@ -33,9 +33,7 @@ func main() {
 
 	arg.MustParse(&args)
 
-	if err := logger.SlogSetDefault(os.Stderr, args.LogHandler, args.LogLevel); err != nil {
-		panic(err)
-	}
+	slog.SetDefault(logger.NewSlogLogger(os.Stderr, args.LogHandler, args.LogLevel))
 
 	if err := appMain(args); err != nil {
 		slog.Error("application error", "err", err)

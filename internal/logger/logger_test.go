@@ -5,6 +5,7 @@ package logger_test
 
 import (
 	"bytes"
+	"context"
 	"log/slog"
 	"regexp"
 	"testing"
@@ -124,63 +125,64 @@ func TestHandlerUnmarshalText(t *testing.T) {
 	}
 }
 
-//nolint:paralleltest
-func TestSlogSetDefault(t *testing.T) {
+func TestNewSlogLogger(t *testing.T) {
+	t.Parallel()
+
 	testCases := []struct {
-		handler logger.Handler
-		level   slog.Level
-		logFunc func(msg string, args ...any)
-		logMsg  string
-		logArgs []any
-		want    *regexp.Regexp
+		handler  logger.Handler
+		leveler  slog.Level
+		logLevel slog.Level
+		logMsg   string
+		logArgs  []any
+		want     *regexp.Regexp
 	}{
 		{
-			handler: logger.HandlerText,
-			level:   slog.LevelDebug,
-			logFunc: slog.Debug,
-			logMsg:  "message",
-			logArgs: []any{"key1", "val1", "key2", "val2"},
-			want:    regexp.MustCompile(`^ts=.+ level=DEBUG msg=message key1=val1 key2=val2\n$`),
+			handler:  logger.HandlerText,
+			leveler:  slog.LevelDebug,
+			logLevel: slog.LevelDebug,
+			logMsg:   "message",
+			logArgs:  []any{"key1", "val1", "key2", "val2"},
+			want:     regexp.MustCompile(`^ts=.+ level=DEBUG msg=message key1=val1 key2=val2\n$`),
 		},
 		{
-			handler: logger.HandlerJSON,
-			level:   slog.LevelDebug,
-			logFunc: slog.Info,
-			logMsg:  "message",
-			logArgs: []any{"key1", "val1", "key2", "val2"},
-			want:    regexp.MustCompile(`^{"ts":".+","level":"INFO","msg":"message","key1":"val1","key2":"val2"}\n$`),
+			handler:  logger.HandlerJSON,
+			leveler:  slog.LevelDebug,
+			logLevel: slog.LevelInfo,
+			logMsg:   "message",
+			logArgs:  []any{"key1", "val1", "key2", "val2"},
+			want:     regexp.MustCompile(`^{"ts":".+","level":"INFO","msg":"message","key1":"val1","key2":"val2"}\n$`),
 		},
 		{
-			handler: logger.HandlerTint,
-			level:   slog.LevelDebug,
-			logFunc: slog.Warn,
-			logMsg:  "message",
-			logArgs: []any{"key1", "val1", "key2", "val2"},
-			want:    regexp.MustCompile(`^\x1b\[2m.+\x1b\[0m \x1b\[93mWRN\x1b\[0m message \x1b\[2mkey1=\x1b\[0mval1 \x1b\[2mkey2=\x1b\[0mval2\n$`), //nolint:lll
+			handler:  logger.HandlerTint,
+			leveler:  slog.LevelDebug,
+			logLevel: slog.LevelWarn,
+			logMsg:   "message",
+			logArgs:  []any{"key1", "val1", "key2", "val2"},
+			want:     regexp.MustCompile(`^\x1b\[2m.+\x1b\[0m \x1b\[93mWRN\x1b\[0m message \x1b\[2mkey1=\x1b\[0mval1 \x1b\[2mkey2=\x1b\[0mval2\n$`), //nolint:lll
 		},
 		{
-			handler: logger.HandlerAuto,
-			level:   slog.LevelDebug,
-			logFunc: slog.Error,
-			logMsg:  "message",
-			logArgs: []any{"key1", "val1", "key2", "val2"},
-			want:    regexp.MustCompile(`^ts=.+ level=ERROR msg=message key1=val1 key2=val2\n$`),
+			handler:  logger.HandlerAuto,
+			leveler:  slog.LevelDebug,
+			logLevel: slog.LevelError,
+			logMsg:   "message",
+			logArgs:  []any{"key1", "val1", "key2", "val2"},
+			want:     regexp.MustCompile(`^ts=.+ level=ERROR msg=message key1=val1 key2=val2\n$`),
 		},
 		{
-			handler: logger.HandlerText,
-			level:   slog.LevelWarn,
-			logFunc: slog.Info,
-			logMsg:  "message",
-			logArgs: []any{"key1", "val1", "key2", "val2"},
-			want:    regexp.MustCompile(`^$`),
+			handler:  logger.HandlerText,
+			leveler:  slog.LevelWarn,
+			logLevel: slog.LevelInfo,
+			logMsg:   "message",
+			logArgs:  []any{"key1", "val1", "key2", "val2"},
+			want:     regexp.MustCompile(`^$`),
 		},
 	}
 
 	for _, tc := range testCases {
 		var buf bytes.Buffer
-		err := logger.SlogSetDefault(&buf, tc.handler, tc.level)
-		require.NoError(t, err)
-		tc.logFunc(tc.logMsg, tc.logArgs...)
+		l := logger.NewSlogLogger(&buf, tc.handler, tc.leveler)
+		require.NotNil(t, l)
+		l.Log(context.Background(), tc.logLevel, tc.logMsg, tc.logArgs...)
 		assert.Regexp(t, tc.want, buf.String())
 	}
 }

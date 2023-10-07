@@ -76,13 +76,13 @@ func (h *Handler) UnmarshalText(b []byte) error {
 	return nil
 }
 
-// SlogSetDefault sets the global slog logger to output to writer, using the specified log handler
-// and the specified minimum logging level. This function also renames the built-in attribute
-// [slog.TimeKey] to "ts" for shorter logs output.
-func SlogSetDefault(writer io.Writer, handler Handler, level slog.Leveler) error {
+// NewSlogLogger creates an [slog.Logger] that outputs to writer, using the specified log handler
+// and the specified leveler implementation (for minimum logging level). This function also renames
+// the built-in attribute [slog.TimeKey] to "ts" for shorter logs output.
+func NewSlogLogger(writer io.Writer, handler Handler, leveler slog.Leveler) *slog.Logger {
 	opts := &slog.HandlerOptions{
 		AddSource: false,
-		Level:     level,
+		Level:     leveler,
 		ReplaceAttr: func(_ []string, a slog.Attr) slog.Attr {
 			if a.Key == slog.TimeKey {
 				a.Key = "ts"
@@ -102,15 +102,14 @@ func SlogSetDefault(writer io.Writer, handler Handler, level slog.Leveler) error
 
 	switch handler {
 	case HandlerText:
-		slog.SetDefault(slog.New(slog.NewTextHandler(writer, opts)))
+		return slog.New(slog.NewTextHandler(writer, opts))
 	case HandlerJSON:
-		slog.SetDefault(slog.New(slog.NewJSONHandler(writer, opts)))
+		return slog.New(slog.NewJSONHandler(writer, opts))
 	case HandlerTint:
-		topts := &tint.Options{ //nolint:exhaustruct
+		return slog.New(tint.NewHandler(writer, &tint.Options{ //nolint:exhaustruct
 			AddSource: opts.AddSource,
 			Level:     opts.Level,
-		}
-		slog.SetDefault(slog.New(tint.NewHandler(writer, topts)))
+		}))
 	case HandlerAuto:
 	}
 
