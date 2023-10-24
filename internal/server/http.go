@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"time"
 
+	tkhttp "github.com/hhromic/go-toolkit/http"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -32,17 +33,7 @@ func ListenAndServe(ctx context.Context, addr string, handler http.Handler) erro
 	egrp, ctx := errgroup.WithContext(ctx)
 
 	egrp.Go(func() error {
-		<-ctx.Done()
-		errs := []error{ctx.Err()}
-
-		ctx, cancel := context.WithTimeout(context.Background(), ShutdownTimeout)
-		defer cancel()
-
-		if err := srv.Shutdown(ctx); err != nil { //nolint:contextcheck
-			errs = append(errs, fmt.Errorf("shutdown: %w", err))
-		}
-
-		return errors.Join(errs...)
+		return fmt.Errorf("wait and shutdown: %w", tkhttp.WaitAndShutdown(ctx, srv, ShutdownTimeout))
 	})
 
 	egrp.Go(func() error {

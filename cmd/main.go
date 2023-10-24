@@ -14,8 +14,8 @@ import (
 	"syscall"
 
 	"github.com/alexflint/go-arg"
+	"github.com/hhromic/go-toolkit/logger"
 	"github.com/hhromic/promrelay-exporter/v2/internal/buildinfo"
-	"github.com/hhromic/promrelay-exporter/v2/internal/logger"
 	_ "github.com/hhromic/promrelay-exporter/v2/internal/metrics" // initialize collectors
 	"github.com/hhromic/promrelay-exporter/v2/internal/server"
 	"go.uber.org/automaxprocs/maxprocs"
