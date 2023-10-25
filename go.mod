@@ -7,7 +7,7 @@ toolchain go1.21.3
 require (
 	github.com/alexflint/go-arg v1.4.3
 	github.com/go-chi/chi/v5 v5.0.10
-	github.com/hhromic/go-toolkit v0.0.0-20231024233041-414f47bca371
+	github.com/hhromic/go-toolkit v0.0.0-20231025001116-93b8e2d9f355
 	github.com/prometheus/client_golang v1.17.0
 	go.uber.org/automaxprocs v1.5.3
 	golang.org/x/sync v0.4.0
