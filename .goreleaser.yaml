@@ -12,5 +12,3 @@ builds:
       - -X {{.ModulePath}}/internal/buildinfo.GitBranch={{.Branch}}
       - -X {{.ModulePath}}/internal/buildinfo.GitCommit={{.ShortCommit}}
       - -X {{.ModulePath}}/internal/buildinfo.Version={{.Version}}
-    targets:
-      - linux_amd64
