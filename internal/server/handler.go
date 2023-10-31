@@ -89,5 +89,5 @@ func getTarget(r *http.Request) (*url.URL, error) {
 func handleErr(w http.ResponseWriter, err error, status int) {
 	http.Error(w, err.Error(), status)
 	slog.Error("relay handler error", "err", err, "status", status)
-	metrics.RelayRequestErrors.Add(1)
+	metrics.RelayRequestErrors.Inc()
 }
