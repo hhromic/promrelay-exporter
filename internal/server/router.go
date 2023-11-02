@@ -8,6 +8,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/hhromic/promrelay-exporter/v2/internal/metrics"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
@@ -20,10 +21,24 @@ const (
 
 // NewRouter creates a top-level [http.Handler] router for the application.
 func NewRouter() http.Handler {
+	rhandler := promhttp.InstrumentHandlerInFlight(
+		metrics.RelayInFlightRequests,
+		promhttp.InstrumentHandlerDuration(
+			metrics.RelayRequestDuration,
+			promhttp.InstrumentHandlerCounter(
+				metrics.RelayRequestsTotal,
+				promhttp.InstrumentHandlerResponseSize(
+					metrics.RelayResponseSize,
+					RelayHandler(),
+				),
+			),
+		),
+	)
+
 	r := chi.NewRouter()
 	r.Use(middleware.Recoverer)
 	r.Mount(PatternMetricsHandler, promhttp.Handler())
-	r.Mount(PatternRelayHandler, RelayHandler())
+	r.Mount(PatternRelayHandler, rhandler)
 
 	return r
 }

@@ -33,10 +33,37 @@ var BuildInfo = promauto.NewGaugeFunc(
 	func() float64 { return 1 },
 )
 
+// RelayInFlightRequests is the collector for the number of relay requests currently being served.
+//
+//nolint:gochecknoglobals
+var RelayInFlightRequests = promauto.NewGauge(
+	prometheus.GaugeOpts{
+		Namespace:   Namespace,
+		Subsystem:   "relay",
+		Name:        "in_flight_requests",
+		Help:        "Number of relay requests currently being served in the Prometheus relay exporter.",
+		ConstLabels: prometheus.Labels{},
+	},
+)
+
+// RelayRequestsTotal is the collector for the total number of relay requests.
+//
+//nolint:gochecknoglobals
+var RelayRequestsTotal = promauto.NewCounterVec(
+	prometheus.CounterOpts{
+		Namespace:   Namespace,
+		Subsystem:   "relay",
+		Name:        "requests_total",
+		Help:        "Total number of relay requests in the Prometheus relay exporter.",
+		ConstLabels: prometheus.Labels{},
+	},
+	[]string{"code"},
+)
+
 // RelayRequestDuration is the collector for the distribution of relay request durations.
 //
 //nolint:exhaustruct,gochecknoglobals
-var RelayRequestDuration = promauto.NewHistogram(
+var RelayRequestDuration = promauto.NewHistogramVec(
 	prometheus.HistogramOpts{
 		Namespace:   Namespace,
 		Subsystem:   "relay",
@@ -44,17 +71,20 @@ var RelayRequestDuration = promauto.NewHistogram(
 		Help:        "Distribution of relay request durations in the Prometheus relay exporter.",
 		ConstLabels: prometheus.Labels{},
 	},
+	[]string{"code"},
 )
 
-// RelayRequestErrors is the collector for the total number of relay request errors.
+// RelayResponseSize is the collector for the distribution of relay response sizes.
 //
-//nolint:gochecknoglobals
-var RelayRequestErrors = promauto.NewCounter(
-	prometheus.CounterOpts{
+//nolint:exhaustruct,gochecknoglobals
+var RelayResponseSize = promauto.NewHistogramVec(
+	prometheus.HistogramOpts{
 		Namespace:   Namespace,
 		Subsystem:   "relay",
-		Name:        "request_errors_total",
-		Help:        "Total number of relay request errors in the Prometheus relay exporter.",
+		Name:        "response_size_bytes",
+		Help:        "Distribution of relay response sizes in the Prometheus relay exporter.",
+		Buckets:     prometheus.ExponentialBuckets(1024, 2, 12), //nolint:gomnd
 		ConstLabels: prometheus.Labels{},
 	},
+	[]string{"code"},
 )

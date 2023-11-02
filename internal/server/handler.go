@@ -11,8 +11,6 @@ import (
 	"net/http/httputil"
 	"net/url"
 	"time"
-
-	"github.com/hhromic/promrelay-exporter/v2/internal/metrics"
 )
 
 const (
@@ -38,13 +36,6 @@ func RelayHandler() http.Handler {
 
 	return http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
 		var target *url.URL
-
-		s := time.Now()
-		defer func() {
-			d := time.Since(s)
-			slog.Debug("relay request completed", "target", target, "duration", d)
-			metrics.RelayRequestDuration.Observe(d.Seconds())
-		}()
 
 		target, err := getTarget(request)
 		if err != nil {
@@ -89,5 +80,4 @@ func getTarget(r *http.Request) (*url.URL, error) {
 func handleErr(w http.ResponseWriter, err error, status int) {
 	http.Error(w, err.Error(), status)
 	slog.Error("relay handler error", "err", err, "status", status)
-	metrics.RelayRequestErrors.Inc()
 }
