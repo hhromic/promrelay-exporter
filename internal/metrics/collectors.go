@@ -69,6 +69,7 @@ var RelayRequestDuration = promauto.NewHistogramVec(
 		Subsystem:   "relay",
 		Name:        "request_duration_seconds",
 		Help:        "Distribution of relay request durations in the Prometheus relay exporter.",
+		Buckets:     []float64{.1, .2, .4, 1, 3, 8, 20, 60, 120},
 		ConstLabels: prometheus.Labels{},
 	},
 	[]string{"code"},
@@ -83,7 +84,7 @@ var RelayResponseSize = promauto.NewHistogramVec(
 		Subsystem:   "relay",
 		Name:        "response_size_bytes",
 		Help:        "Distribution of relay response sizes in the Prometheus relay exporter.",
-		Buckets:     prometheus.ExponentialBuckets(1024, 2, 12), //nolint:gomnd
+		Buckets:     prometheus.ExponentialBuckets(100, 10, 8), //nolint:gomnd
 		ConstLabels: prometheus.Labels{},
 	},
 	[]string{"code"},
