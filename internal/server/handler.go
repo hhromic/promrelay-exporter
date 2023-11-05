@@ -4,7 +4,6 @@
 package server
 
 import (
-	"log/slog"
 	"net/http"
 	"net/http/httputil"
 	"time"
@@ -27,7 +26,6 @@ func RelayHandler() http.Handler {
 
 		rproxy := &httputil.ReverseProxy{ //nolint:exhaustruct
 			ErrorHandler: func(w http.ResponseWriter, r *http.Request, err error) {
-				slog.Error("relay error", "err", err)
 				http.Error(w, "relay error: "+err.Error(), http.StatusBadGateway)
 			},
 			Rewrite: func(r *httputil.ProxyRequest) {
