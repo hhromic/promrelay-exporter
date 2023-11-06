@@ -4,14 +4,28 @@
 package server
 
 import (
+	"errors"
+	"fmt"
 	"net/http"
 	"net/http/httputil"
+	"net/url"
 	"time"
+)
+
+const (
+	// QueryParamTarget is the request query parameter used for providing the relay target.
+	QueryParamTarget = "target"
 )
 
 const (
 	// ResponseHeaderTimeout is the maximum time to wait for reading an HTTP response header.
 	ResponseHeaderTimeout = 60 * time.Second
+)
+
+// Errors used by handlers in the server package.
+var (
+	// ErrQueryParamMissing is returned when a request query parameter is missing.
+	ErrQueryParamMissing = errors.New("query parameter missing")
 )
 
 // RelayHandler is an [http.Handler] for target relay requests.
@@ -20,9 +34,12 @@ func RelayHandler() http.Handler {
 	transport.ResponseHeaderTimeout = ResponseHeaderTimeout
 
 	return http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
-		ctx := request.Context()
+		target, err := getTarget(request)
+		if err != nil {
+			Error(writer, request, err.Error(), http.StatusBadRequest)
 
-		target := TargetURLFromContext(ctx)
+			return
+		}
 
 		rproxy := &httputil.ReverseProxy{ //nolint:exhaustruct
 			ErrorHandler: func(w http.ResponseWriter, r *http.Request, err error) {
@@ -38,4 +55,18 @@ func RelayHandler() http.Handler {
 
 		rproxy.ServeHTTP(writer, request)
 	})
+}
+
+func getTarget(r *http.Request) (*url.URL, error) {
+	t := r.URL.Query().Get(QueryParamTarget)
+	if t == "" {
+		return nil, fmt.Errorf("%w: %q", ErrQueryParamMissing, QueryParamTarget)
+	}
+
+	target, err := url.ParseRequestURI(t)
+	if err != nil {
+		return nil, fmt.Errorf("target is not a valid URL: %w", err)
+	}
+
+	return target, nil
 }

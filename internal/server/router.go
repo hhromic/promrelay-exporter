@@ -29,7 +29,7 @@ func NewRouter() http.Handler {
 				metrics.RelayRequestsTotal,
 				promhttp.InstrumentHandlerResponseSize(
 					metrics.RelayResponseSize,
-					ExtractQueryParamTargetURL(RelayHandler()),
+					RelayHandler(),
 				),
 			),
 		),
