@@ -4,7 +4,6 @@
 package server
 
 import (
-	"errors"
 	"fmt"
 	"net/http"
 	"net/http/httputil"
@@ -20,12 +19,6 @@ const (
 const (
 	// ResponseHeaderTimeout is the maximum time to wait for reading an HTTP response header.
 	ResponseHeaderTimeout = 60 * time.Second
-)
-
-// Errors used by handlers in the server package.
-var (
-	// ErrQueryParamMissing is returned when a request query parameter is missing.
-	ErrQueryParamMissing = errors.New("query parameter missing")
 )
 
 // RelayHandler is an [http.Handler] for target relay requests.
@@ -60,7 +53,7 @@ func RelayHandler() http.Handler {
 func getTarget(r *http.Request) (*url.URL, error) {
 	t := r.URL.Query().Get(QueryParamTarget)
 	if t == "" {
-		return nil, fmt.Errorf("%w: %q", ErrQueryParamMissing, QueryParamTarget)
+		return nil, fmt.Errorf("%w: %q", ErrMissingQueryParam, QueryParamTarget)
 	}
 
 	target, err := url.ParseRequestURI(t)
