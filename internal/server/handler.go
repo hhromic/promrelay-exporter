@@ -26,7 +26,7 @@ func RelayHandler() http.Handler {
 
 		rproxy := &httputil.ReverseProxy{ //nolint:exhaustruct
 			ErrorHandler: func(w http.ResponseWriter, r *http.Request, err error) {
-				http.Error(w, "relay error: "+err.Error(), http.StatusBadGateway)
+				Error(w, r, "relay error: "+err.Error(), http.StatusBadGateway)
 			},
 			Rewrite: func(r *httputil.ProxyRequest) {
 				r.SetXForwarded()

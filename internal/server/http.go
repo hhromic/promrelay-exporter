@@ -7,6 +7,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log/slog"
 	"net/http"
 	"time"
 
@@ -49,4 +50,11 @@ func ListenAndServe(ctx context.Context, addr string, handler http.Handler) erro
 	}
 
 	return nil
+}
+
+// Error replies to the request with the specified error message and HTTP code.
+// It also logs the request remote address, error and code as a warning.
+func Error(w http.ResponseWriter, r *http.Request, err string, code int) {
+	http.Error(w, err, code)
+	slog.Warn("request error", "addr", r.RemoteAddr, "err", err, "code", code)
 }

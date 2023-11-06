@@ -28,14 +28,14 @@ func ExtractQueryParamTargetURL(next http.Handler) http.Handler {
 
 		target := request.URL.Query().Get(QueryParamTarget)
 		if target == "" {
-			http.Error(writer, "query parameter missing: "+QueryParamTarget, http.StatusBadRequest)
+			Error(writer, request, "query parameter missing: "+QueryParamTarget, http.StatusBadRequest)
 
 			return
 		}
 
 		parsed, err := url.ParseRequestURI(target)
 		if err != nil {
-			http.Error(writer, QueryParamTarget+" is not a valid URL: "+err.Error(), http.StatusBadRequest)
+			Error(writer, request, QueryParamTarget+": "+err.Error(), http.StatusBadRequest)
 
 			return
 		}
