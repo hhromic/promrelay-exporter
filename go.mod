@@ -5,10 +5,10 @@ go 1.21.0
 require (
 	github.com/alexflint/go-arg v1.4.3
 	github.com/go-chi/chi/v5 v5.0.10
-	github.com/hhromic/go-toolkit v0.0.0-20231030152050-a88c885fa318
+	github.com/hhromic/go-toolkit v0.0.0-20231108200246-4a0fe3a96ef0
 	github.com/prometheus/client_golang v1.17.0
 	go.uber.org/automaxprocs v1.5.3
-	golang.org/x/sync v0.4.0
+	golang.org/x/sync v0.5.0
 )
 
 require (
@@ -22,7 +22,7 @@ require (
 	github.com/prometheus/client_model v0.5.0 // indirect
 	github.com/prometheus/common v0.45.0 // indirect
 	github.com/prometheus/procfs v0.12.0 // indirect
-	golang.org/x/sys v0.13.0 // indirect
+	golang.org/x/sys v0.14.0 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 )
 
