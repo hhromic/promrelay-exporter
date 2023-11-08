@@ -1,5 +1,5 @@
 # Start a new stage for building the application
-FROM golang:1.21.3 AS builder
+FROM golang:1.21.4 AS builder
 
 # Download and install GoReleaser
 RUN TGZ_URL=https://github.com/goreleaser/goreleaser/releases/download/v1.21.2/goreleaser_Linux_x86_64.tar.gz \
