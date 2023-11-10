@@ -34,7 +34,11 @@ func ListenAndServe(ctx context.Context, addr string, handler http.Handler) erro
 	egrp, ctx := errgroup.WithContext(ctx)
 
 	egrp.Go(func() error {
-		return fmt.Errorf("wait and shutdown: %w", tkhttp.WaitAndShutdown(ctx, srv, ShutdownTimeout))
+		if err := tkhttp.WaitAndShutdown(ctx, srv, ShutdownTimeout); err != nil {
+			return fmt.Errorf("wait and shutdown: %w", err)
+		}
+
+		return nil
 	})
 
 	egrp.Go(func() error {
