@@ -5,14 +5,12 @@ package server
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"log/slog"
 	"net/http"
 	"time"
 
 	tkhttp "github.com/hhromic/go-toolkit/http"
-	"golang.org/x/sync/errgroup"
 )
 
 const (
@@ -22,35 +20,17 @@ const (
 	ReadHeaderTimeout time.Duration = 60 * time.Second
 )
 
-// ListenAndServe listens on the TCP network address addr and serves the handler.
+// Run listens on the TCP network address addr and serves the handler.
 // This function implements graceful shutdown when the passed ctx is done.
-func ListenAndServe(ctx context.Context, addr string, handler http.Handler) error {
+func Run(ctx context.Context, addr string, handler http.Handler) error {
 	srv := &http.Server{ //nolint:exhaustruct
 		Addr:              addr,
 		Handler:           handler,
 		ReadHeaderTimeout: ReadHeaderTimeout,
 	}
 
-	egrp, ctx := errgroup.WithContext(ctx)
-
-	egrp.Go(func() error {
-		if err := tkhttp.WaitAndShutdown(ctx, srv, ShutdownTimeout); err != nil {
-			return fmt.Errorf("wait and shutdown: %w", err)
-		}
-
-		return nil
-	})
-
-	egrp.Go(func() error {
-		if err := srv.ListenAndServe(); !errors.Is(err, http.ErrServerClosed) {
-			return fmt.Errorf("listen and serve: %w", err)
-		}
-
-		return nil
-	})
-
-	if err := egrp.Wait(); err != nil {
-		return fmt.Errorf("errgroup wait: %w", err)
+	if err := tkhttp.RunServer(ctx, srv, ShutdownTimeout); err != nil {
+		return fmt.Errorf("run server: %w", err)
 	}
 
 	return nil

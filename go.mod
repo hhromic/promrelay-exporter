@@ -5,10 +5,9 @@ go 1.21.0
 require (
 	github.com/alexflint/go-arg v1.4.3
 	github.com/go-chi/chi/v5 v5.0.10
-	github.com/hhromic/go-toolkit v0.0.0-20231108200246-4a0fe3a96ef0
+	github.com/hhromic/go-toolkit v0.0.0-20231112004528-3ea087c85533
 	github.com/prometheus/client_golang v1.17.0
 	go.uber.org/automaxprocs v1.5.3
-	golang.org/x/sync v0.5.0
 )
 
 require (
