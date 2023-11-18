@@ -6,8 +6,6 @@ package server
 import (
 	"net/http"
 
-	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
 	"github.com/hhromic/promrelay-exporter/v2/internal/metrics"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
@@ -19,8 +17,8 @@ const (
 	PatternRelayHandler = "/relay"
 )
 
-// NewRouter creates a top-level [http.Handler] router for the application.
-func NewRouter() http.Handler {
+// NewServeMux creates a top-level request multiplexer for the application.
+func NewServeMux() *http.ServeMux {
 	rhandler := promhttp.InstrumentHandlerInFlight(
 		metrics.RelayInFlightRequests,
 		promhttp.InstrumentHandlerDuration(
@@ -35,10 +33,9 @@ func NewRouter() http.Handler {
 		),
 	)
 
-	r := chi.NewRouter()
-	r.Use(middleware.Recoverer)
-	r.Mount(PatternMetricsHandler, promhttp.Handler())
-	r.Mount(PatternRelayHandler, rhandler)
+	m := http.NewServeMux()
+	m.Handle(PatternMetricsHandler, promhttp.Handler())
+	m.Handle(PatternRelayHandler, rhandler)
 
-	return r
+	return m
 }
