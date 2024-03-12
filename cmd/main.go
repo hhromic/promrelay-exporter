@@ -29,10 +29,8 @@ type args struct {
 }
 
 func (args) Description() string {
-	return fmt.Sprintf(
-		"Prometheus relay exporter - version %s (%s/%s)",
-		buildinfo.Version, buildinfo.GitBranch, buildinfo.GitCommit,
-	)
+	return "Prometheus relay exporter version " + buildinfo.Version +
+		" (git:" + buildinfo.GitBranch + "/" + buildinfo.GitCommit + ")"
 }
 
 func main() {
