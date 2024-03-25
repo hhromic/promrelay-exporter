@@ -12,3 +12,7 @@ linters:
     - scopelint  # replaced by 'exportloopref'
     - structcheck  # replaced by 'unused'
     - varcheck  # replaced by 'unused'
+
+linters-settings:
+  misspell:
+    locale: US
