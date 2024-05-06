@@ -84,7 +84,7 @@ var RelayResponseSize = promauto.NewHistogramVec(
 		Subsystem:   "relay",
 		Name:        "response_size_bytes",
 		Help:        "Distribution of relay response sizes in the Prometheus relay exporter.",
-		Buckets:     prometheus.ExponentialBuckets(100, 10, 8), //nolint:gomnd
+		Buckets:     prometheus.ExponentialBuckets(100, 10, 8), //nolint:mnd
 		ConstLabels: prometheus.Labels{},
 	},
 	[]string{"code"},
