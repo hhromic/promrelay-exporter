@@ -1,19 +1,9 @@
 linters:
   enable-all: true
   disable:
-    - deadcode  # replaced by 'unused'
     - depguard  # not currently used
     - execinquery  # archived by the owner
-    - exhaustivestruct  # replaced by 'exhaustruct'
-    - golint  # replaced by 'revive'
     - gomnd  # replaced by 'mnd'
-    - ifshort  # deprecated by the owner
-    - interfacer  # archived by the owner
-    - maligned  # replaced by 'govet'
-    - nosnakecase  # replaced by 'revive'
-    - scopelint  # replaced by 'exportloopref'
-    - structcheck  # replaced by 'unused'
-    - varcheck  # replaced by 'unused'
 
 linters-settings:
   misspell:
