@@ -3,6 +3,7 @@ linters:
   disable:
     - depguard  # not currently used
     - execinquery  # archived by the owner
+    - exportloopref  # replaced by 'copyloopvar'
     - gomnd  # replaced by 'mnd'
 
 linters-settings:
