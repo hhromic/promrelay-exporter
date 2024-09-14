@@ -25,7 +25,7 @@ docker buildx build -t ghcr.io/hhromic/promrelay-exporter:vX.Y.Z .
 
 To build a snapshot locally Using [GoReleaser](https://goreleaser.com/):
 ```
-goreleaser build --clean --single-target --output promrelay-exporter --snapshot
+goreleaser build --clean --single-target --snapshot
 ```
 
 ## License
