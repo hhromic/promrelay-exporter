@@ -2,7 +2,7 @@
 FROM golang:1.23.1 AS builder
 
 # Download and install GoReleaser
-RUN TGZ_URL=https://github.com/goreleaser/goreleaser/releases/download/v2.3.1/goreleaser_Linux_x86_64.tar.gz \
+RUN TGZ_URL=https://github.com/goreleaser/goreleaser/releases/download/v2.3.2/goreleaser_Linux_x86_64.tar.gz \
     && curl --proto '=https' --tlsv1.2 -L "${TGZ_URL}" | tar zxf - -C /usr/bin goreleaser
 
 # Set a well-known building directory
