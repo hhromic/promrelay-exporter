@@ -14,13 +14,14 @@ Usage examples can be found in the [`examples/`](examples/) directory.
 
 ## Building
 
-To build a release Docker image for the project:
+To build a release Docker image, use [Docker Build Bake](https://docs.docker.com/build/bake/):
 ```
 git checkout vX.Y.Z
-docker buildx build -t ghcr.io/hhromic/promrelay-exporter:vX.Y.Z .
+TAG=vX.Y.Z docker buildx bake
 ```
 
-> **Note:** Ready-to-use images are available in the
+> [!NOTE]
+> Ready-to-use images are available in the
 > [GitHub Container Registry](https://github.com/users/hhromic/packages/container/package/promrelay-exporter).
 
 To build a snapshot locally Using [GoReleaser](https://goreleaser.com/):
