@@ -2,7 +2,7 @@ linters:
   enable-all: true
   disable:
     - depguard  # not currently used
-    - exportloopref  # replaced by 'copyloopvar'
+    - tenv  # replaced by 'usetesting'
 
 linters-settings:
   misspell:
