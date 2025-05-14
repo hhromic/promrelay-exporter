@@ -16,8 +16,7 @@ RUN go mod download \
 # Copy application sources and build the application
 COPY . .
 ARG GORELEASER_EXTRA_ARGS
-RUN GOTOOLCHAIN=local \
-    CGO_ENABLED=0 \
+RUN CGO_ENABLED=0 \
     goreleaser build --clean --single-target ${GORELEASER_EXTRA_ARGS}
 
 # Start a new stage for the final application image
