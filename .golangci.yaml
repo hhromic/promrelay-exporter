@@ -1,9 +1,9 @@
+version: 2
+
 linters:
-  enable-all: true
+  default: all
   disable:
     - depguard  # not currently used
-    - tenv  # replaced by 'usetesting'
-
-linters-settings:
-  misspell:
-    locale: US
+  settings:
+    misspell:
+      locale: US
