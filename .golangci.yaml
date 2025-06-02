@@ -7,3 +7,14 @@ linters:
   settings:
     misspell:
       locale: US
+
+formatters:
+  enable:
+    - gci
+    - gofmt
+    - gofumpt
+    - goimports
+    - golines
+  settings:
+    golines:
+      reformat-tags: false
