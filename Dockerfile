@@ -3,7 +3,7 @@ FROM golang:1.24.3 AS builder
 
 # Download and install GoReleaser
 ADD https://github.com/goreleaser/goreleaser/releases/download/v2.9.0/goreleaser_Linux_x86_64.tar.gz goreleaser.tar.gz
-RUN tar zxf goreleaser.tar.gz --one-top-level=/usr/bin goreleaser
+RUN tar zxf goreleaser.tar.gz --one-top-level=/usr/bin/ goreleaser
 
 # Set a well-known building directory
 WORKDIR /build
