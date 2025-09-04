@@ -18,7 +18,6 @@ import (
 	"github.com/hhromic/promrelay-exporter/v2/internal/buildinfo"
 	_ "github.com/hhromic/promrelay-exporter/v2/internal/metrics" // initialize collectors
 	"github.com/hhromic/promrelay-exporter/v2/internal/server"
-	"go.uber.org/automaxprocs/maxprocs"
 )
 
 //nolint:lll,tagalign
@@ -47,10 +46,6 @@ func main() {
 }
 
 func appMain(args args) error {
-	if _, err := maxprocs.Set(); err != nil {
-		slog.Warn("failed to set GOMAXPROCS", "err", err)
-	}
-
 	slog.Info("starting",
 		"version", buildinfo.Version,
 		"goversion", buildinfo.GoVersion,

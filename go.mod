@@ -6,7 +6,6 @@ require (
 	github.com/alexflint/go-arg v1.6.0
 	github.com/hhromic/go-toolkit v0.0.0-20250804214423-0831444a23a2
 	github.com/prometheus/client_golang v1.23.1
-	go.uber.org/automaxprocs v1.6.0
 )
 
 require (
