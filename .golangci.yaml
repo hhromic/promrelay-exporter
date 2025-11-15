@@ -4,6 +4,8 @@ linters:
   default: all
   disable:
     - depguard  # not currently used
+    - noinlineerr  # not currently used
+    - wsl  # replaced by 'wsl_v5'
   settings:
     misspell:
       locale: US
