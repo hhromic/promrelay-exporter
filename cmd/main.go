@@ -28,7 +28,7 @@ type args struct {
 }
 
 func (args) Description() string {
-	return "Prometheus relay exporter version."
+	return "Prometheus relay exporter."
 }
 
 func (args) Version() string {
