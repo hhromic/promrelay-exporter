@@ -19,7 +19,7 @@ connected to a database and the other to a supporting service.
 
 In this scenario, it is fundamental to keep both applications **isolated**.
 
-The above deployment can be easily modelled using two Docker Compose stacks
+The above deployment can be easily modeled using two Docker Compose stacks
 running in a Docker Swarm cluster. In this case, each application and
 their associated services can run in their own isolated overlay network.
 
@@ -82,6 +82,6 @@ The Prometheus relay exporter in the above architecture offers the following ben
 * Automatic discovery of containers to scrape can be achieved using the
   [Docker service discovery](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#docker_sd_config)
   mechanism in Prometheus.
-  * In this case, original container label metadata can be directly preserved via Prometheus relabelling.
+  * In this case, original container label metadata can be directly preserved via Prometheus relabeling.
 
 Refer to the provided [examples](examples/) for more information.

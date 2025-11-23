@@ -1,15 +1,16 @@
 # Automatic Discovery Example
 
-> **Note:** The example in this directory assumes that you have Docker running
+> [!NOTE]
+> The example in this directory assumes that you have Docker running
 > in [swarm mode](https://docs.docker.com/engine/swarm/).
 
-To run the example, first deploy the centralised Prometheus stack:
+To run the example, first deploy the centralized Prometheus stack:
 ```
 docker config create metrics-prometheus-yaml configs/prometheus.yaml
 docker stack deploy -c stacks/metrics.yaml metrics
 ```
 
-The above will initialise a Prometheus instance running on port `9090`.
+The above will initialize a Prometheus instance running on port `9090`.
 
 In addition, this stack also creates a `metrics_default` overlay network.
 
@@ -29,7 +30,8 @@ This stack will deploy four containers:
 After deploying, and after a short time, the configured Docker Swarm autodiscovery in Prometheus
 will find the deployed service containers and autoconfigure metrics scraping using the labels.
 
-> **Note:** The Docker Swarm autodiscovery defaults to refreshing data every `60s`.
+> [!NOTE]
+> The Docker Swarm autodiscovery defaults to refreshing data every `60s`.
 
 You can now verify that Prometheus is able to scrape the metrics exposed by the
 Node Exporter containers, without having direct access to it.
@@ -55,7 +57,8 @@ To configure the discovered scrape targets, the following labels are available:
 * `metrics.relay.port`: (Optional) Set the port of the relay exporter to use.
 * `metrics.relay.scheme`: (Optional) Set the protocol scheme for the relay exporter.
 
-> **Note:** The relay exporter is only used when both `metrics.relay.host` and
+> [!NOTE]
+> The relay exporter is only used when both `metrics.relay.host` and
 > `metrics.relay.port` labels are specified.
 
 These labels must be attached at the service level, i.e. under the `deploy` key
