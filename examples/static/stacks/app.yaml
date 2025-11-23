@@ -2,9 +2,9 @@ version: '3.8'
 
 services:
   node:
-    image: quay.io/prometheus/node-exporter:v1.6.0
+    image: quay.io/prometheus/node-exporter:v1.10.2
   promrelay:
-    image: ghcr.io/hhromic/promrelay-exporter:v2.2.0
+    image: ghcr.io/hhromic/promrelay-exporter:v2.7.0
     networks:
       - default
       - metrics

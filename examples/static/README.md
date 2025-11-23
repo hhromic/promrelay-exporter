@@ -41,4 +41,5 @@ Finally, to remove everything done in this example:
 docker stack rm app
 docker stack rm metrics
 docker config rm metrics-prometheus-yaml
+docker volume rm metrics_data
 ```
