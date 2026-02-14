@@ -14,7 +14,7 @@ import (
 	"syscall"
 
 	"github.com/alexflint/go-arg"
-	tkslog "github.com/hhromic/go-toolkit/slog"
+	"github.com/hhromic/go-toolkit/slogkit"
 	"github.com/hhromic/promrelay-exporter/v2/internal/buildinfo"
 	_ "github.com/hhromic/promrelay-exporter/v2/internal/metrics" // initialize collectors
 	"github.com/hhromic/promrelay-exporter/v2/internal/server"
@@ -22,9 +22,9 @@ import (
 
 //nolint:lll,tagalign
 type args struct {
-	ListenAddress string         `arg:"--listen-address,env:LISTEN_ADDRESS" default:":9878" placeholder:"ADDRESS" help:"listen address for the HTTP server"`
-	LogHandler    tkslog.Handler `arg:"--log-handler,env:LOG_HANDLER" default:"auto" placeholder:"HANDLER" help:"application logging handler"`
-	LogLevel      slog.Level     `arg:"--log-level,env:LOG_LEVEL" default:"info" placeholder:"LEVEL" help:"application logging level"`
+	ListenAddress string          `arg:"--listen-address,env:LISTEN_ADDRESS" default:":9878" placeholder:"ADDRESS" help:"listen address for the HTTP server"`
+	LogHandler    slogkit.Handler `arg:"--log-handler,env:LOG_HANDLER" default:"auto" placeholder:"HANDLER" help:"application logging handler"`
+	LogLevel      slog.Level      `arg:"--log-level,env:LOG_LEVEL" default:"info" placeholder:"LEVEL" help:"application logging level"`
 }
 
 func (args) Description() string {
@@ -40,7 +40,7 @@ func main() {
 
 	arg.MustParse(&args)
 
-	slog.SetDefault(tkslog.NewSlogLogger(os.Stderr, args.LogHandler, args.LogLevel))
+	slog.SetDefault(slogkit.NewLogger(os.Stderr, args.LogHandler, args.LogLevel))
 
 	if err := appMain(args); err != nil {
 		slog.Error("application error", "err", err)

@@ -4,7 +4,7 @@ go 1.26.0
 
 require (
 	github.com/alexflint/go-arg v1.6.1
-	github.com/hhromic/go-toolkit v0.0.0-20260211225118-2d9f8a2bf46e
+	github.com/hhromic/go-toolkit v0.0.0-20260214231043-9678ef09e56d
 	github.com/prometheus/client_golang v1.23.2
 )
 

@@ -11,8 +11,8 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/google/go-cmp v0.7.0 h1:wk8382ETsv4JYUZwIsn6YpYiWiBsYLSJiTsyBybVuN8=
 github.com/google/go-cmp v0.7.0/go.mod h1:pXiqmnSA92OHEEa9HXL2W4E7lf9JzCmGVUdgjX3N/iU=
-github.com/hhromic/go-toolkit v0.0.0-20260211225118-2d9f8a2bf46e h1:0D175lXq+6zN3K79LsSWXMhw7urh87xSSMl84aDnc5Y=
-github.com/hhromic/go-toolkit v0.0.0-20260211225118-2d9f8a2bf46e/go.mod h1:kdzt7wJ/MVafc87fmlXl4QpT0K3ghwPXJY+d4vHj3Ek=
+github.com/hhromic/go-toolkit v0.0.0-20260214231043-9678ef09e56d h1:9pxnjs0tAu0KvWW4owlc42GKxXRubTvPCK7GaBit3g0=
+github.com/hhromic/go-toolkit v0.0.0-20260214231043-9678ef09e56d/go.mod h1:kdzt7wJ/MVafc87fmlXl4QpT0K3ghwPXJY+d4vHj3Ek=
 github.com/klauspost/compress v1.18.0 h1:c/Cqfb0r+Yi+JtIEq73FWXVkRonBlf0CRNYc8Zttxdo=
 github.com/klauspost/compress v1.18.0/go.mod h1:2Pp+KzxcywXVXMr50+X0Q/Lsb43OQHYWRCY2AiWywWQ=
 github.com/kr/pretty v0.3.1 h1:flRD4NNwYAUpkphVc1HcthR4KEIFJ65n8Mw5qdRn3LE=

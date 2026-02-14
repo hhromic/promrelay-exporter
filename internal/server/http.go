@@ -10,7 +10,7 @@ import (
 	"net/http"
 	"time"
 
-	tkhttp "github.com/hhromic/go-toolkit/http"
+	"github.com/hhromic/go-toolkit/httpkit"
 )
 
 const (
@@ -29,7 +29,7 @@ func Run(ctx context.Context, addr string, handler http.Handler) error {
 		ReadHeaderTimeout: ReadHeaderTimeout,
 	}
 
-	if err := tkhttp.RunServer(ctx, srv, ShutdownTimeout); err != nil {
+	if err := httpkit.RunServer(ctx, srv, ShutdownTimeout); err != nil {
 		return fmt.Errorf("run server: %w", err)
 	}
 
