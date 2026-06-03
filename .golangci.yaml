@@ -4,6 +4,7 @@ linters:
   default: all
   disable:
     - depguard  # not currently used
+    - gomodguard  # replaced by 'gomodguard_v2'
     - noinlineerr  # not currently used
     - wsl  # replaced by 'wsl_v5'
   settings:
