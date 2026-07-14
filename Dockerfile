@@ -1,8 +1,8 @@
 # Start a new stage for building the application
-FROM golang:1.26.4 AS builder
+FROM golang:1.26.5 AS builder
 
 # Download and install GoReleaser
-ADD https://github.com/goreleaser/goreleaser/releases/download/v2.16.0/goreleaser_Linux_x86_64.tar.gz goreleaser.tar.gz
+ADD https://github.com/goreleaser/goreleaser/releases/download/v2.17.0/goreleaser_Linux_x86_64.tar.gz goreleaser.tar.gz
 RUN tar zxf goreleaser.tar.gz --one-top-level=/usr/bin/ goreleaser
 
 # Set a well-known building directory
