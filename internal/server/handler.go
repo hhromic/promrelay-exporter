@@ -34,7 +34,7 @@ func RelayHandler() http.Handler {
 			return
 		}
 
-		rproxy := &httputil.ReverseProxy{ //nolint:exhaustruct
+		rproxy := &httputil.ReverseProxy{ //nolint:exhaustruct_v5
 			ErrorHandler: func(w http.ResponseWriter, r *http.Request, err error) {
 				Error(w, r, "relay error: "+err.Error(), http.StatusBadGateway)
 			},

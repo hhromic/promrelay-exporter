@@ -23,7 +23,7 @@ const (
 // Run listens on the TCP network address addr and serves the handler.
 // This function implements graceful shutdown when the passed ctx is done.
 func Run(ctx context.Context, addr string, handler http.Handler) error {
-	srv := &http.Server{ //nolint:exhaustruct
+	srv := &http.Server{ //nolint:exhaustruct_v5
 		Addr:              addr,
 		Handler:           handler,
 		ReadHeaderTimeout: ReadHeaderTimeout,

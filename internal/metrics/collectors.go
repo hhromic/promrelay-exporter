@@ -14,7 +14,7 @@ const Namespace = "promrelay"
 
 // BuildInfo is the collector for build information of the application.
 //
-//nolint:gochecknoglobals
+//nolint:exhaustruct_v5,gochecknoglobals
 var BuildInfo = promauto.NewGaugeFunc(
 	prometheus.GaugeOpts{
 		Namespace: Namespace,
@@ -35,7 +35,7 @@ var BuildInfo = promauto.NewGaugeFunc(
 
 // RelayInFlightRequests is the collector for the number of relay requests currently being served.
 //
-//nolint:gochecknoglobals
+//nolint:exhaustruct_v5,gochecknoglobals
 var RelayInFlightRequests = promauto.NewGauge(
 	prometheus.GaugeOpts{
 		Namespace:   Namespace,
@@ -48,7 +48,7 @@ var RelayInFlightRequests = promauto.NewGauge(
 
 // RelayRequestsTotal is the collector for the total number of relay requests.
 //
-//nolint:gochecknoglobals
+//nolint:exhaustruct_v5,gochecknoglobals
 var RelayRequestsTotal = promauto.NewCounterVec(
 	prometheus.CounterOpts{
 		Namespace:   Namespace,
@@ -62,7 +62,7 @@ var RelayRequestsTotal = promauto.NewCounterVec(
 
 // RelayRequestDuration is the collector for the distribution of relay request durations.
 //
-//nolint:exhaustruct,gochecknoglobals
+//nolint:exhaustruct_v5,gochecknoglobals
 var RelayRequestDuration = promauto.NewHistogramVec(
 	prometheus.HistogramOpts{
 		Namespace:   Namespace,
@@ -77,7 +77,7 @@ var RelayRequestDuration = promauto.NewHistogramVec(
 
 // RelayResponseSize is the collector for the distribution of relay response sizes.
 //
-//nolint:exhaustruct,gochecknoglobals
+//nolint:exhaustruct_v5,gochecknoglobals
 var RelayResponseSize = promauto.NewHistogramVec(
 	prometheus.HistogramOpts{
 		Namespace:   Namespace,
