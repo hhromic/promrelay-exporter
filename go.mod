@@ -1,6 +1,6 @@
 module github.com/hhromic/promrelay-exporter/v2
 
-go 1.26.0
+go 1.27.0
 
 require (
 	github.com/alexflint/go-arg v1.6.1
