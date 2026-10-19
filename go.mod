@@ -4,22 +4,22 @@ go 1.27.0
 
 require (
 	github.com/alexflint/go-arg v1.6.1
-	github.com/hhromic/go-toolkit v0.0.0-20260821223831-5b7b779301b6
-	github.com/prometheus/client_golang v1.24.1
+	github.com/hhromic/go-toolkit v0.0.0-20261019221154-9c22485cdfce
+	github.com/prometheus/client_golang v1.25.0
 )
 
 require (
 	github.com/alexflint/go-scalar v1.2.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
-	github.com/lmittmann/tint v1.2.0 // indirect
-	github.com/mattn/go-colorable v0.1.15 // indirect
+	github.com/lmittmann/tint v1.2.1 // indirect
+	github.com/mattn/go-colorable v0.1.16 // indirect
 	github.com/mattn/go-isatty v0.0.24 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
-	github.com/prometheus/client_model v0.6.2 // indirect
-	github.com/prometheus/common v0.70.1 // indirect
+	github.com/prometheus/client_model v0.6.3 // indirect
+	github.com/prometheus/common v0.72.1 // indirect
 	github.com/prometheus/procfs v0.22.0 // indirect
-	golang.org/x/sys v0.47.0 // indirect
+	golang.org/x/sys v0.49.0 // indirect
 	google.golang.org/protobuf v1.36.12 // indirect
 )
 
