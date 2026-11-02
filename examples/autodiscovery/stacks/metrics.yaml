@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   prometheus:
-    image: quay.io/prometheus/prometheus:v3.7.3
+    image: quay.io/prometheus/prometheus:v3.13.5
     command: >-
       --config.file=/prometheus.yaml
       --storage.tsdb.path=/prometheus
